@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btnSignIn" type="id" />
+    <item name="tilPassword" type="id" />
+    <item name="etPassword" type="id" />
+    <item name="tilEmail" type="id" />
+    <item name="etEmail" type="id" />
+    <item name="btnSignUp" type="id" />
+    <item name="tilName" type="id" />
+    <item name="etName" type="id" />
+</resources>
