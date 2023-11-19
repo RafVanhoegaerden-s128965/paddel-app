@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "536727612463",
+    "project_id": "paddel-app-a82c6",
+    "storage_bucket": "paddel-app-a82c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536727612463:android:d83329692e63cc7d7c6ada",
+        "android_client_info": {
+          "package_name": "com.example.paddel_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOSpVg2r1vcPey7n2wqYmsmaV7utW3Mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
