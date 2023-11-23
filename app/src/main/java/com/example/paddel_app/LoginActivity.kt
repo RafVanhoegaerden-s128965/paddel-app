@@ -42,5 +42,10 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Vul alle velden in.", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.btnToSignUp.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
