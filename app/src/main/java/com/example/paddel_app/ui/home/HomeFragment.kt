@@ -1,3 +1,5 @@
+package com.example.paddel_app.ui.home
+import HomeViewModel
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
