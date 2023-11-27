@@ -29,17 +29,17 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Gebruiker succesvol ingelogd
-                            Toast.makeText(this, "Inloggen succesvol", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                             // Start MainActivity en sluit com.example.paddel_app.LoginActivity
                             startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         } else {
                             // Inloggen mislukt, toon een foutmelding
-                            Toast.makeText(this, "Inloggen mislukt. Controleer je gegevens.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Login failed. Check your details.", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {
-                Toast.makeText(this, "Vul alle velden in.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Fill out all fields.", Toast.LENGTH_SHORT).show()
             }
         }
         binding.btnToSignUp.setOnClickListener {

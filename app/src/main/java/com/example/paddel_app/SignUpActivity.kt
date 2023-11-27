@@ -34,11 +34,11 @@ class SignUpActivity : AppCompatActivity() {
                             // Je kunt hier de overgang naar het volgende scherm regelen
                         } else {
                             // Registratie mislukt, toon een foutmelding
-                            Toast.makeText(this, "Registratie mislukt. Probeer het opnieuw.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Registration failed. Try again.", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {
-                Toast.makeText(this, "Vul alle velden in.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Fill out all fields.", Toast.LENGTH_SHORT).show()
             }
         }
         binding.btnBackToLogin.setOnClickListener {

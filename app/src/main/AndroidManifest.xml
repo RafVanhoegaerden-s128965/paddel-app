@@ -15,7 +15,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:label="InLoggen">
+            android:label="LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".SignUpActivity"
-            android:label="Rigstreren"
+            android:label="SignUp"
             android:exported="false">
         </activity>
         <activity

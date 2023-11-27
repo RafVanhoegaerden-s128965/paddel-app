@@ -66,7 +66,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Register"
+        android:text="Sign Up"
         android:onClick="signUp" />
     <Button
         android:id="@+id/btnBackToLogin"
@@ -76,7 +76,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="LogIn"
+        android:text="Go To LogIn"
         android:onClick="backToLogin" />
 
 </RelativeLayout>
