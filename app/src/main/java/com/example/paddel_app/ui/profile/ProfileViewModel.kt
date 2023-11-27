@@ -1,13 +1,13 @@
-package com.example.paddel_app.ui.notifications
+package com.example.paddel_app.ui.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
-
+class ProfileViewModel : ViewModel() {
+    // TODO: Implement the ViewModel
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is profile Fragment"
     }
     val text: LiveData<String> = _text
 }

@@ -12,7 +12,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Naam">
+        android:hint="Name">
 
         <EditText
             android:id="@+id/etName"
@@ -48,7 +48,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Wachtwoord">
+        android:hint="Password">
 
         <EditText
             android:id="@+id/etPassword"
@@ -66,7 +66,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Registreren"
+        android:text="Register"
         android:onClick="signUp" />
     <Button
         android:id="@+id/btnBackToLogin"
@@ -76,7 +76,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Terug naar Inloggen"
+        android:text="LogIn"
         android:onClick="backToLogin" />
 
 </RelativeLayout>
