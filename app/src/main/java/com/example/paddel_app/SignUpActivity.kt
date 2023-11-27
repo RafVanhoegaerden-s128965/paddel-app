@@ -64,7 +64,9 @@ class SignUpActivity : AppCompatActivity() {
                                 }
 
                         } else {
-                            // Registratie mislukt, toon een foutmelding
+                            if (password.length < 6){
+                                Toast.makeText(this, "Password must be atleast 6 characters.", Toast.LENGTH_SHORT).show()
+                            }
                             Toast.makeText(this, "Registration failed. Try again.", Toast.LENGTH_SHORT).show()
                         }
                     }
