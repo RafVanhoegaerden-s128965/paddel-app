@@ -9,14 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.paddel_app.R
-import com.example.paddel_app.databinding.FragmentDashboardBinding
 import com.example.paddel_app.databinding.FragmentProfileBinding
-import com.example.paddel_app.ui.dashboard.DashboardViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
+    private lateinit var profileViewModel : ProfileViewModel
 
     private val binding get() = _binding!!
 
@@ -25,11 +24,10 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val profileViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         val textView: TextView = binding.textProfile
         profileViewModel.text.observe(viewLifecycleOwner) {
@@ -51,6 +49,9 @@ class ProfileFragment : Fragment() {
 
         // Get userId
         val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            Log.d("currentUser", "user: ${user.email.toString()}")
+        }
         val userId = user!!.uid
 
         // Get document
@@ -66,12 +67,15 @@ class ProfileFragment : Fragment() {
                     if (name != null) {
                         // Use the name as a string
                         Log.d("Profile.Name", "Name: $name")
+                        val profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+                        profileViewModel.testPassingName(name)
                     }
                 }
             }
         }.addOnFailureListener { e ->
             Log.e("Profile.Name", "Error getting document: $e")
         }
+
     }
 
     override fun onDestroyView() {
