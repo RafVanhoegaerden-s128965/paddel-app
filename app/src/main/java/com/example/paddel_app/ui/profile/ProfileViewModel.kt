@@ -7,15 +7,14 @@ import androidx.lifecycle.ViewModel
 
 class ProfileViewModel : ViewModel() {
     // TODO: Implement the ViewModel
-    private val _text = MutableLiveData<String>().apply { value = "initial_value" }
-    var text: LiveData<String> = _text
 
-    fun testPassingName(name: String) {
-        Log.d("testPassingName", name)
-        _text.value = name
+    //<editor-fold desc="Profile Name">
+    private val _name = MutableLiveData<String>().apply { value = "" }
+    var textName: LiveData<String> = _name
+
+    fun getName(name: String) {
+        Log.d("User.Name", name)
+        _name.value = name
     }
-
-
-
-
+    //</editor-fold>
 }

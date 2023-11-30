@@ -29,8 +29,10 @@ class ProfileFragment : Fragment() {
         val root: View = binding.root
         val profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
+
+
         val textView: TextView = binding.textProfile
-        profileViewModel.text.observe(viewLifecycleOwner) {
+        profileViewModel.textName.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
@@ -43,15 +45,18 @@ class ProfileFragment : Fragment() {
         return root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
     fun getName(callback: (String?) -> Unit, textView: TextView) {
         // Create Firestore instance
         val db = FirebaseFirestore.getInstance()
 
         // Get userId
         val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            Log.d("currentUser", "user: ${user.email.toString()}")
-        }
         val userId = user!!.uid
 
         // Get document
@@ -68,19 +73,12 @@ class ProfileFragment : Fragment() {
                         // Use the name as a string
                         Log.d("Profile.Name", "Name: $name")
                         val profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-                        profileViewModel.testPassingName(name)
+                        profileViewModel.getName(name)
                     }
                 }
             }
         }.addOnFailureListener { e ->
             Log.e("Profile.Name", "Error getting document: $e")
         }
-
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }

@@ -4,6 +4,7 @@ import HomeViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.paddel_app.databinding.ActivityMainBinding
+import com.example.paddel_app.ui.profile.ProfileViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
+        //<editor-fold desc="NavBar">
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
@@ -36,15 +41,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_profile
             )
         )
-        
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        val intent = Intent(this, MainActivity::class.java)
-
-        val userEmail = intent.getStringExtra("userEmail")
-        Log.d("MainActivity", "User email: $userEmail")
-        homeViewModel.setUserEmail(userEmail ?: "")
+        //</editor-fold>
     }
 }
