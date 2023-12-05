@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.example.paddel_app.databinding.ActivitySignUpBinding
+import com.example.paddel_app.model.User
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
@@ -24,11 +25,15 @@ class SignUpActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         binding.btnSignUp.setOnClickListener {
-            val name = binding.etName.text.toString()
+            val firstName = binding.etFirstName.text.toString()
+            val lastName = binding.etLastName.text.toString()
+            val birthDate = binding.etDOB.text.toString()
+            val gender = binding.etGender.text.toString()
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
-            if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+
+            if (firstName.isNotEmpty() && lastName.isNotEmpty() && gender.isNotEmpty() && birthDate.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
@@ -41,10 +46,20 @@ class SignUpActivity : AppCompatActivity() {
                             val user = auth.currentUser
                             val userId = user!!.uid
 
+                            val newUser = User(
+                                userId,firstName, lastName, email, gender, birthDate)
                             // Set user fields
                             val userData = hashMapOf(
-                                "name" to name,
-                                "email" to email
+                                "firstName" to newUser.firstName,
+                                "lastName" to newUser.lastName,
+                                "email" to newUser.email,
+                                "gender" to newUser.gender,
+                                "birthDate" to newUser.lastName,
+                                "email" to newUser.email,
+                                "bestHand" to newUser.bestHand,
+                                "courtPosition" to newUser.courtPosition,
+                                "matchType" to newUser.matchType,
+                                "preferredTime" to newUser.preferredTime,
                             )
 
                             // Add user data to Firestore userID as documentID

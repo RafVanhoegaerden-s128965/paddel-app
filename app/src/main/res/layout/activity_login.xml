@@ -48,6 +48,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_centerHorizontal="true"
         android:text="LogIn"
         android:onClick="signIn" />
 
@@ -60,6 +61,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_centerHorizontal="true"
         android:text="SignUp"
         android:onClick="ToSignUp" />
 

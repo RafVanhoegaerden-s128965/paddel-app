@@ -61,14 +61,14 @@ class ProfileFragment : Fragment() {
         docRef.get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
                 // Check if the "name" field exists in the document
-                if (document.contains("name")) {
+                if (document.contains("firstName")) {
                     // Retrieve the value of the "name" field
-                    val name = document.getString("name")
-                    if (name != null) {
+                    val firstName = document.getString("firstName")
+                    if (firstName != null) {
                         // Use the name as a string
-                        Log.d("Profile.Name", "Name: $name")
+                        Log.d("Profile.FirstName", "firstName: $firstName")
                         val profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-                        profileViewModel.testPassingName(name)
+                        profileViewModel.testPassingName(firstName)
                     }
                 }
             }
