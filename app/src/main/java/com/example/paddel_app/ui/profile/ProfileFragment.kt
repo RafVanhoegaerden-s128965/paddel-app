@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentProfileBinding
+import com.example.paddel_app.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -27,55 +28,19 @@ class ProfileFragment : Fragment() {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        val profileViewModel = ViewModelProvider(this, ).get(ProfileViewModel::class.java)
 
-        val textView: TextView = binding.textProfile
-        profileViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
+
+        // TextViews
+        val userNameTextView: TextView = binding.usernameProfile
+
+        // Observables
+        profileViewModel.userName.observe(viewLifecycleOwner) {userName ->
+            userNameTextView.text = userName
         }
-
-        val textName = textView.findViewById<TextView>(R.id.text_profile)
-
-        getName( { name ->
-            textName.text = name
-        }, textName)
 
         return root
-    }
-
-    fun getName(callback: (String?) -> Unit, textView: TextView) {
-        // Create Firestore instance
-        val db = FirebaseFirestore.getInstance()
-
-        // Get userId
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            Log.d("currentUser", "user: ${user.email.toString()}")
-        }
-        val userId = user!!.uid
-
-        // Get document
-        val docRef = db.collection("user").document(userId)
-
-        // Get the "name" field
-        docRef.get().addOnSuccessListener { document ->
-            if (document != null && document.exists()) {
-                // Check if the "name" field exists in the document
-                if (document.contains("firstName")) {
-                    // Retrieve the value of the "name" field
-                    val firstName = document.getString("firstName")
-                    if (firstName != null) {
-                        // Use the name as a string
-                        Log.d("Profile.FirstName", "firstName: $firstName")
-                        val profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-                        profileViewModel.testPassingName(firstName)
-                    }
-                }
-            }
-        }.addOnFailureListener { e ->
-            Log.e("Profile.Name", "Error getting document: $e")
-        }
-
     }
 
     override fun onDestroyView() {

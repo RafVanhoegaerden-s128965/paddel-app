@@ -5,11 +5,11 @@ enum class Hand {
 }
 
 enum class CourtPosition {
-    SINGLES, DOUBLES
+    FOREHAND, BACKHAND
 }
 
 enum class MatchType {
-    SINGLES, DOUBLES, MIXED_DOUBLES
+    COMPETITIVE, FRIENDLY, BOTH
 }
 
 enum class PreferredTime {

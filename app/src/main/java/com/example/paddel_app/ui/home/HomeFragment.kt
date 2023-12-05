@@ -27,9 +27,5 @@ class HomeFragment : Fragment() {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        homeViewModel.email.observe(viewLifecycleOwner, { userEmail ->
-            Log.d("HomeFragment", "Observer triggered. User email: $userEmail")
-            binding.textHome.text = "Welkom, $userEmail!"
-        })
     }
 }

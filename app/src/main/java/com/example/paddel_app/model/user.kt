@@ -13,4 +13,7 @@ data class User(
     val courtPosition: CourtPosition? = null,
     val matchType: MatchType? = null,
     val preferredTime: PreferredTime? = null
-)
+) {
+    // No-argument constructor
+    constructor() : this("", "", "", "", "", "", null, null, null, null)
+}
