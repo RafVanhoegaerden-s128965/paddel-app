@@ -76,11 +76,47 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Handedness"/>
-                    <EditText
-                        android:layout_width="match_parent"
+
+                    <TextView
+                        android:id="@+id/bestHandTextView"
+                        android:layout_width="80dp"
+                        android:layout_height="20dp"
+                        android:paddingLeft="15dp"
+                        android:text="Not Set"
+                        android:textColor="#0027FF"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:padding="8dp"/>
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/leftHandBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Left"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/ambidextrousBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ambidextrous"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/rightHandBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Right"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -100,11 +136,38 @@
                         android:layout_height="wrap_content"
                         android:text="Court Position"/>
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/notSet2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:padding="8dp"/>
+                        android:layout_height="20dp"
+                        android:paddingLeft="15dp"
+                        android:text="Not Set"
+                        android:textColor="#0027FF"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="start|left"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Forehand"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/button7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Backhand"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -121,11 +184,46 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Match Type"/>
-                    <EditText
+
+                    <TextView
+                        android:id="@+id/notSet3"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:padding="8dp"/>
+                        android:layout_height="20dp"
+                        android:paddingLeft="15dp"
+                        android:text="Not Set"
+                        android:textColor="#0027FF"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="start|left"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Morning"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/button12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Afternoon"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/button13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Evening"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -142,13 +240,54 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Preferred Time"/>
-                    <EditText
+
+                    <TextView
+                        android:id="@+id/notSet4"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:padding="8dp"/>
+                        android:layout_height="20dp"
+                        android:paddingLeft="15dp"
+                        android:text="Not Set"
+                        android:textColor="#0027FF"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="start|left"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Competitive"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/button9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Friendly"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/button10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Both"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile" />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
