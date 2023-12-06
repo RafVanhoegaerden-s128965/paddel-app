@@ -3,7 +3,6 @@ package com.example.paddel_app
 import HomeViewModel
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -13,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.paddel_app.databinding.ActivityMainBinding
 import com.example.paddel_app.model.User
 import com.example.paddel_app.ui.profile.ProfileViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var homeViewModel: HomeViewModel
-    //private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        //profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         //region NavigationBar
         val navView: BottomNavigationView = binding.navView
@@ -51,15 +51,14 @@ class MainActivity : AppCompatActivity() {
         getUser { user ->
             if (user != null) {
                 Log.d("MainActivity", "User: ${user.firstName} ${user.lastName}")
-//                profileViewModel.setUserName()
-                // TODO Give User Instance to other Fragments
+                profileViewModel.setUserName(user)
             } else {
                 Log.e("MainActivity", "User is null")
             }
         }
     }
 
-    fun getUser(callback: (User?) -> Unit) {
+    private fun getUser(callback: (User?) -> Unit) {
         // Create Firestore instance
         val db = FirebaseFirestore.getInstance()
 
