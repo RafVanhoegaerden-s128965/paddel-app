@@ -1,23 +1,20 @@
 package com.example.paddel_app.ui.profile
 
-import android.os.Binder
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.service.autofill.FieldClassification.Match
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
-import com.example.paddel_app.MainActivity
-import com.example.paddel_app.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.paddel_app.databinding.FragmentProfileBinding
 import com.example.paddel_app.enum.CourtPosition
 import com.example.paddel_app.enum.Hand
+
 import com.example.paddel_app.enum.MatchType
 import com.example.paddel_app.enum.PreferredTime
 import com.example.paddel_app.model.User
@@ -28,7 +25,7 @@ import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
-    private lateinit var profileViewModel : ProfileViewModel
+    private lateinit var profileViewModel: ProfileViewModel
 
     private val binding get() = _binding!!
 
@@ -39,6 +36,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -56,17 +54,28 @@ class ProfileFragment : Fragment() {
         //endregion
 
         //region Buttons
+        val root: View = binding.root
+
+        profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
+
+        val userNameTextView: TextView = binding.usernameProfile
+        profileViewModel.userName.observe(viewLifecycleOwner, Observer { userName ->
+            userName?.let {
+                userNameTextView.text = it
+            }
+        })
+
         //region BestHandButtons
         val leftHandBtn: Button = binding.leftHandBtn
-        leftHandBtn.setOnClickListener(){
+        leftHandBtn.setOnClickListener() {
             profileViewModel.updateBestHand(Hand.LEFT)
         }
         val ambidextrousBtn: Button = binding.ambidextrousBtn
-        ambidextrousBtn.setOnClickListener(){
+        ambidextrousBtn.setOnClickListener() {
             profileViewModel.updateBestHand(Hand.AMBIDEXTROUS)
         }
         val rightHandBtn: Button = binding.rightHandBtn
-        rightHandBtn.setOnClickListener(){
+        rightHandBtn.setOnClickListener() {
             profileViewModel.updateBestHand(Hand.RIGHT)
         }
         //endregion
@@ -146,11 +155,11 @@ class ProfileFragment : Fragment() {
             preferredTimeTextView.text = preferredTime.toString()
         }
         //endregion
+        return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

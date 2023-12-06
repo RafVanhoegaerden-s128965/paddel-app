@@ -13,6 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 // Remove user argument to FIX crash!!!!
 class ProfileViewModel(/*private val user: User*/) : ViewModel() {
+  
+class ProfileViewModel : ViewModel() {
 
     //region PrivateVariables
     private val _db = FirebaseFirestore.getInstance()
@@ -25,6 +27,10 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
     //endregion
 
     //region PublicVariables
+    
+    // Functions
+    fun setUserName(user: User) {
+        Log.d("ProfileViewModel.SetUserName", "User: ${user.firstName} ${user.lastName}")
 
     val bestHand:MutableLiveData<Hand> get() = _bestHand
     val courtPosition:MutableLiveData<CourtPosition> get() = _courtPosition
@@ -122,4 +128,12 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
     //endregion
 
     //endregion
+}
+    fun getUserName(): String? {
+        return _userName.value
+    }
+
+    fun updateBestHand(besthand: Hand) {
+        // TODO Add logic to add to firebase
+    }
 }
