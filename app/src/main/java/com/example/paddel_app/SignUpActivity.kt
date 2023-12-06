@@ -73,7 +73,7 @@ class SignUpActivity : AppCompatActivity() {
                                 }
                                 .addOnFailureListener { e ->
                                     // Handle errors
-                                    Log.e("Firestore", "Error adding user data", e)
+                                    Log.d("Firestore", "Error adding user data", e)
                                     Toast.makeText(this, "Error: Registration failed.", Toast.LENGTH_SHORT).show()
                                 }
 
@@ -81,6 +81,7 @@ class SignUpActivity : AppCompatActivity() {
                             if (password.length < 6){
                                 Toast.makeText(this, "Password must be atleast 6 characters.", Toast.LENGTH_SHORT).show()
                             }
+
                             Toast.makeText(this, "Registration failed. Try again.", Toast.LENGTH_SHORT).show()
                         }
                     }

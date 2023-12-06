@@ -17,7 +17,8 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
 
     //region PrivateVariables
     private val _db = FirebaseFirestore.getInstance()
-    private val _user = MutableLiveData<User>()
+    private val _user = FirebaseAuth.getInstance().currentUser
+
 
     private val _userName = MutableLiveData<String>()
     private val _bestHand = MutableLiveData<Hand>()
@@ -47,39 +48,94 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
     }
 
     //region Update
-    fun updateBestHand(userId: String, bestHand : Hand){
-        // TODO Add logic to add to firebase
-//        val docRef = db.collection("user").document(userId)
+    fun updateBestHand(bestHand : Hand){
+        // Get collection
+        val docRef = _db.collection("user").document(_user!!.uid)
 
-//        val data = mapOf(
-//            "bestHand" to bestHand
-//        )
-//
-//        docRef.update(data)
-//            .addOnSuccessListener {
-//            // Update successful
-//            Log.e("Update BestHand", "Best Hand: ${bestHand}")
-//        }
-//            .addOnFailureListener { e ->
-//                // Handle the error
-//                println("Error updating document: $e")
-//            }
+        // Map data
+        val data = mapOf(
+            "bestHand" to bestHand
+        )
+
+        // Update data
+        docRef.update(data)
+            .addOnSuccessListener {
+            // Update successful
+            Log.e("Update BestHand", "Best Hand: ${bestHand}")
+        }
+            .addOnFailureListener { e ->
+                // Handle the error
+                println("Error updating document: $e")
+            }
     }
 
-    fun updateCourtPosition(userId: String, courtPosition: CourtPosition){
-        // TODO Add logic to add to firebase
+    fun updateCourtPosition(courtPosition: CourtPosition){
+        // Get collection
+        val docRef = _db.collection("user").document(_user!!.uid)
+
+        // Map data
+        val data = mapOf(
+            "courtPosition" to courtPosition
+        )
+
+        // Update data
+        docRef.update(data)
+            .addOnSuccessListener {
+                // Update successful
+                Log.e("Update BestHand", "Court Position: ${courtPosition}")
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                println("Error updating document: $e")
+            }
     }
 
-    fun updateMatchType(userId: String, matchType: MatchType){
-        // TODO Add logic to add to firebase
+    fun updateMatchType(matchType: MatchType){
+        // Get collection
+        val docRef = _db.collection("user").document(_user!!.uid)
+
+        // Map data
+        val data = mapOf(
+            "matchType" to matchType
+        )
+
+        // Update data
+        docRef.update(data)
+            .addOnSuccessListener {
+                // Update successful
+                Log.e("Update BestHand", "Match Type: ${matchType}")
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                println("Error updating document: $e")
+            }
     }
 
-    fun updatePreferredTime(userId: String, preferredTime: PreferredTime){
-        // TODO Add logic to add to firebase
+    fun updatePreferredTime(preferredTime: PreferredTime){
+        // Get collection
+        val docRef = _db.collection("user").document(_user!!.uid)
+
+        // Map data
+        val data = mapOf(
+            "preferredTime" to preferredTime
+        )
+
+        // Update data
+        docRef.update(data)
+            .addOnSuccessListener {
+                // Update successful
+                Log.e("Update BestHand", "PreferredTime: ${preferredTime}")
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                println("Error updating document: $e")
+            }
     }
     //endregion
 
     //endregion
+
+    //TODO Get current User -- In plaats van profileViewModel functie zou die de user vanuit de MainActivity moeten ophalen
 
     fun getUser(callback: (User?) -> Unit) {
         // Create Firestore instance

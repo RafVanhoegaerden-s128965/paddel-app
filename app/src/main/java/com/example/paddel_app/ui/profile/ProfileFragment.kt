@@ -32,7 +32,6 @@ class ProfileFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private var currentUser : User? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,18 +49,6 @@ class ProfileFragment : Fragment() {
 
         profileViewModel = ViewModelProvider(this, ).get(ProfileViewModel::class.java)
 
-        //TODO Get current User -- In plaats van profileViewModel functie zou die de user vanuit de MainActivity moeten ophalen
-        profileViewModel.getUser { user ->
-            if (user != null) {
-                Log.d("ProfileFragment", "User Name: ${user.firstName} ${user.lastName}")
-                Log.d("ProfileFragment", "User Id: ${user.id}") //TODO ID is empty???
-
-                currentUser = user
-            } else {
-                Log.e("ProfileFragment", "User is null")
-            }
-        }
-
         //region TextViews
         val userNameTextView: TextView = binding.usernameProfile
         val bestHandTextView: TextView = binding.bestHandTextView
@@ -74,57 +61,57 @@ class ProfileFragment : Fragment() {
         //region BestHandButtons
         val leftHandBtn: Button = binding.leftHandBtn
         leftHandBtn.setOnClickListener(){
-            profileViewModel.updateBestHand(currentUser!!.id, Hand.LEFT)
+            profileViewModel.updateBestHand(Hand.LEFT)
         }
         val ambidextrousBtn: Button = binding.ambidextrousBtn
         ambidextrousBtn.setOnClickListener(){
-            profileViewModel.updateBestHand(currentUser!!.id, Hand.AMBIDEXTROUS)
+            profileViewModel.updateBestHand(Hand.AMBIDEXTROUS)
         }
         val rightHandBtn: Button = binding.rightHandBtn
         rightHandBtn.setOnClickListener(){
-            profileViewModel.updateBestHand(currentUser!!.id, Hand.RIGHT)
+            profileViewModel.updateBestHand(Hand.RIGHT)
         }
         //endregion
 
         //region CourtPosition
         val foreHandBtn: Button = binding.foreHandBtn
         foreHandBtn.setOnClickListener(){
-            profileViewModel.updateCourtPosition(currentUser!!.id, CourtPosition.FOREHAND)
+            profileViewModel.updateCourtPosition(CourtPosition.FOREHAND)
         }
 
         val backHandBtn: Button = binding.backHandBtn
         backHandBtn.setOnClickListener(){
-            profileViewModel.updateCourtPosition(currentUser!!.id, CourtPosition.BACKHAND)
+            profileViewModel.updateCourtPosition(CourtPosition.BACKHAND)
         }
         //endregion
 
         //region MatchType
         val competitiveBtn: Button = binding.competitiveBtn
         competitiveBtn.setOnClickListener(){
-            profileViewModel.updateMatchType(currentUser!!.id, MatchType.COMPETITIVE)
+            profileViewModel.updateMatchType(MatchType.COMPETITIVE)
         }
         val friendlyBtn: Button = binding.friendlyBtn
         friendlyBtn.setOnClickListener(){
-            profileViewModel.updateMatchType(currentUser!!.id, MatchType.FRIENDLY)
+            profileViewModel.updateMatchType(MatchType.FRIENDLY)
         }
         val bothMatchTypeBtn: Button = binding.bothMatchTypeBtn
         bothMatchTypeBtn.setOnClickListener(){
-            profileViewModel.updateMatchType(currentUser!!.id, MatchType.BOTH)
+            profileViewModel.updateMatchType(MatchType.BOTH)
         }
         //endregion
 
         //region PreferredTime
         val morningBtn: Button = binding.morginBtn
         morningBtn.setOnClickListener(){
-            profileViewModel.updatePreferredTime(currentUser!!.id, PreferredTime.MORNING)
+            profileViewModel.updatePreferredTime(PreferredTime.MORNING)
         }
         val afternoonBtn: Button = binding.afternoonBtn
         afternoonBtn.setOnClickListener(){
-            profileViewModel.updatePreferredTime(currentUser!!.id, PreferredTime.AFTERNOON)
+            profileViewModel.updatePreferredTime(PreferredTime.AFTERNOON)
         }
         val eveningBtn: Button = binding.eveningBtn
         eveningBtn.setOnClickListener(){
-            profileViewModel.updatePreferredTime(currentUser!!.id, PreferredTime.EVENING)
+            profileViewModel.updatePreferredTime(PreferredTime.EVENING)
         }
         //endregion
 
