@@ -45,8 +45,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val profileModelFactory = ProfileModelFactory(user)
-
         profileViewModel = ViewModelProvider(this, ).get(ProfileViewModel::class.java)
 
         //region TextViews
@@ -119,22 +117,36 @@ class ProfileFragment : Fragment() {
 
         //region Observables
         profileViewModel.userName.observe(viewLifecycleOwner) {userName ->
+            //TODO this code not working
             userNameTextView.text = userName
         }
 
         profileViewModel.bestHand.observe(viewLifecycleOwner) {bestHand ->
+            //TODO this code not working
             bestHandTextView.text = bestHand.toString()
+
+            // Change button text color if value is in firebase
+            if (bestHand == Hand.LEFT){
+                leftHandBtn.setTextColor(resources.getColor(R.color.white))
+            } else if (bestHand == Hand.AMBIDEXTROUS){
+                ambidextrousBtn.setTextColor(resources.getColor(R.color.white))
+            } else if (bestHand == Hand.RIGHT){
+                rightHandBtn.setTextColor(resources.getColor(R.color.white))
+            }
         }
 
         profileViewModel.courtPosition.observe(viewLifecycleOwner) {courtPosition ->
+            //TODO this code not working
             courtPositionTextView.text = courtPosition.toString()
         }
 
         profileViewModel.matchType.observe(viewLifecycleOwner) {matchType ->
+            //TODO this code not working
             matchTypeTextView.text = matchType.toString()
         }
 
         profileViewModel.preferredTime.observe(viewLifecycleOwner) {preferredTime ->
+            //TODO this code not working
             preferredTimeTextView.text = preferredTime.toString()
         }
         //endregion

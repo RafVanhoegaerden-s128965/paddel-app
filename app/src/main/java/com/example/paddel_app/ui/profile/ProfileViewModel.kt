@@ -10,17 +10,14 @@ import com.example.paddel_app.enum.PreferredTime
 import com.example.paddel_app.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 
 // Remove user argument to FIX crash!!!!
 class ProfileViewModel(/*private val user: User*/) : ViewModel() {
 
     //region PrivateVariables
     private val _db = FirebaseFirestore.getInstance()
-    private val _user = FirebaseAuth.getInstance().currentUser
+    private val _currentUser = FirebaseAuth.getInstance().currentUser
 
-
-    private val _userName = MutableLiveData<String>()
     private val _bestHand = MutableLiveData<Hand>()
     private val _courtPosition = MutableLiveData<CourtPosition>()
     private val _matchType = MutableLiveData<MatchType>()
@@ -28,7 +25,7 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
     //endregion
 
     //region PublicVariables
-    val userName: MutableLiveData<String> get() = _userName
+
     val bestHand:MutableLiveData<Hand> get() = _bestHand
     val courtPosition:MutableLiveData<CourtPosition> get() = _courtPosition
     val matchType:MutableLiveData<MatchType> get() = _matchType
@@ -38,19 +35,10 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
 
     //region Functions
 
-    // TODO fix Function if user is getted
-    fun setUserName(user : User){
-        Log.d("ProfileViewModel.SetUserName", "User: ${user.firstName} ${user.lastName}")
-
-        val userName = "${user.firstName} ${user.lastName}"
-
-        _userName.value = userName
-    }
-
     //region Update
     fun updateBestHand(bestHand : Hand){
         // Get collection
-        val docRef = _db.collection("user").document(_user!!.uid)
+        val docRef = _db.collection("user").document(_currentUser!!.uid)
 
         // Map data
         val data = mapOf(
@@ -71,7 +59,7 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
 
     fun updateCourtPosition(courtPosition: CourtPosition){
         // Get collection
-        val docRef = _db.collection("user").document(_user!!.uid)
+        val docRef = _db.collection("user").document(_currentUser!!.uid)
 
         // Map data
         val data = mapOf(
@@ -92,7 +80,7 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
 
     fun updateMatchType(matchType: MatchType){
         // Get collection
-        val docRef = _db.collection("user").document(_user!!.uid)
+        val docRef = _db.collection("user").document(_currentUser!!.uid)
 
         // Map data
         val data = mapOf(
@@ -113,7 +101,7 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
 
     fun updatePreferredTime(preferredTime: PreferredTime){
         // Get collection
-        val docRef = _db.collection("user").document(_user!!.uid)
+        val docRef = _db.collection("user").document(_currentUser!!.uid)
 
         // Map data
         val data = mapOf(
@@ -134,35 +122,4 @@ class ProfileViewModel(/*private val user: User*/) : ViewModel() {
     //endregion
 
     //endregion
-
-    //TODO Get current User -- In plaats van profileViewModel functie zou die de user vanuit de MainActivity moeten ophalen
-
-    fun getUser(callback: (User?) -> Unit) {
-        // Create Firestore instance
-        val db = FirebaseFirestore.getInstance()
-
-        // Get userId
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            Log.d("currentUser", "user: ${user.email.toString()}")
-        }
-        val userId = user!!.uid
-
-        // Get document
-        val docRef = db.collection("user").document(userId)
-
-        // Get the User object
-        docRef.get().addOnSuccessListener { document ->
-            if (document != null && document.exists()) {
-                // Convert Firestore document to User object
-                val user = document.toObject<User>()
-                callback(user)
-            } else {
-                callback(null)
-            }
-        }.addOnFailureListener { e ->
-            Log.e("MainActivity.User", "Error getting document: $e")
-            callback(null)
-        }
-    }
 }
