@@ -116,10 +116,6 @@ class ProfileFragment : Fragment() {
         //endregion
 
         //region Observables
-        profileViewModel.userName.observe(viewLifecycleOwner) {userName ->
-            //TODO this code not working
-            userNameTextView.text = userName
-        }
 
         profileViewModel.bestHand.observe(viewLifecycleOwner) {bestHand ->
             //TODO this code not working
