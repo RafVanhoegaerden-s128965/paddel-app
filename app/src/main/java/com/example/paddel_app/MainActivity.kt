@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCourts(callback: (List<Court>) -> Unit) {
+    fun getCourts(callback: (List<Court>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val courtsCollection = db.collection("courts")
 
