@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.paddel_app.databinding.ActivityMainBinding
+import com.example.paddel_app.model.Court
 import com.example.paddel_app.model.User
 import com.example.paddel_app.ui.profile.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -56,6 +57,12 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "User is null")
             }
         }
+
+        getCourts { courts ->
+            for (court in courts) {
+                Log.d("MainActivity", "Court: ${court}")
+            }
+        }
     }
 
     private fun getUser(callback: (User?) -> Unit) {
@@ -88,4 +95,31 @@ class MainActivity : AppCompatActivity() {
             callback(null)
         }
     }
+
+    private fun getCourts(callback: (List<Court>) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val courtsCollection = db.collection("courts")
+
+        courtsCollection.get()
+            .addOnSuccessListener { result ->
+                val courtsList = mutableListOf<Court>()
+
+                for (document in result) {
+                    // Convert each document to a Court object
+                    val court = document.toObject(Court::class.java)
+                    court.id = document.id
+                    courtsList.add(court)
+                }
+
+                // Invoke the callback with the list of courts
+                callback(courtsList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("MainActivity", "Firestore query failed: $exception")
+                // Handle errors here
+            }
+    }
+
+
+
 }
