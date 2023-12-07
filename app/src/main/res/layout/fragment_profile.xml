@@ -137,7 +137,7 @@
                         android:text="Court Position"/>
 
                     <TextView
-                        android:id="@+id/notSet2"
+                        android:id="@+id/courtPositionTextView"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:paddingLeft="15dp"
@@ -152,7 +152,7 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/button5"
+                            android:id="@+id/foreHandBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Forehand"
@@ -160,7 +160,7 @@
                             android:textSize="13sp" />
 
                         <Button
-                            android:id="@+id/button7"
+                            android:id="@+id/backHandBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Backhand"
@@ -186,7 +186,7 @@
                         android:text="Match Type"/>
 
                     <TextView
-                        android:id="@+id/notSet3"
+                        android:id="@+id/matchTypeTextView"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:paddingLeft="15dp"
@@ -201,26 +201,26 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/button11"
+                            android:id="@+id/comptetitveBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Morning"
+                            android:text="Comptetitive"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
-                            android:id="@+id/button12"
+                            android:id="@+id/friendlyBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Afternoon"
+                            android:text="Friendly"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
-                            android:id="@+id/button13"
+                            android:id="@+id/bothMatchTypeBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Evening"
+                            android:text="Both"
                             android:textColor="#000000"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -242,7 +242,7 @@
                         android:text="Preferred Time"/>
 
                     <TextView
-                        android:id="@+id/notSet4"
+                        android:id="@+id/preferredTimeTextView"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:paddingLeft="15dp"
@@ -257,26 +257,26 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/button8"
+                            android:id="@+id/morningBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Competitive"
+                            android:text="Morning"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
-                            android:id="@+id/button9"
+                            android:id="@+id/afternoonBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Friendly"
+                            android:text="Afternoon"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
-                            android:id="@+id/button10"
+                            android:id="@+id/eveningBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Both"
+                            android:text="Evening"
                             android:textColor="#000000"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -284,7 +284,7 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/editProfileBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Edit Profile" />
