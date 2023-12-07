@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         getUser { user ->
             if (user != null) {
                 Log.d("MainActivity", "User: ${user.firstName} ${user.lastName}")
-                profileViewModel.setUserName(user)
+                profileViewModel.setUser(user)
             } else {
                 Log.e("MainActivity", "User is null")
             }
@@ -66,6 +66,8 @@ class MainActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             Log.d("currentUser", "user: ${user.email.toString()}")
+            Log.d("currentUser", "user: ${user.email.toString()}")
+
         }
         val userId = user!!.uid
 

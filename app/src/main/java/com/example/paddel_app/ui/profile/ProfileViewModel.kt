@@ -10,7 +10,6 @@ import com.example.paddel_app.enum.PreferredTime
 import com.example.paddel_app.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.sync.Mutex
 
 class ProfileViewModel : ViewModel() {
 
@@ -20,18 +19,18 @@ class ProfileViewModel : ViewModel() {
 
     private val _userName = MutableLiveData<String>()
 
-    private val _bestHand = MutableLiveData<Hand>()
-    private val _courtPosition = MutableLiveData<CourtPosition>()
-    private val _matchType = MutableLiveData<MatchType>()
-    private val _preferredTime = MutableLiveData<PreferredTime>()
+    private val _bestHand = MutableLiveData<Hand?>()
+    private val _courtPosition = MutableLiveData<CourtPosition?>()
+    private val _matchType = MutableLiveData<MatchType?>()
+    private val _preferredTime = MutableLiveData<PreferredTime?>()
     //endregion
 
     //region PublicVariables
     val userName: MutableLiveData<String> get() = _userName
-    val bestHand: MutableLiveData<Hand> get() = _bestHand
-    val courtPosition: MutableLiveData<CourtPosition> get() = _courtPosition
-    val matchType: MutableLiveData<MatchType> get() = _matchType
-    val preferredTime: MutableLiveData<PreferredTime> get() = _preferredTime
+    val bestHand: MutableLiveData<Hand?> get() = _bestHand
+    val courtPosition: MutableLiveData<CourtPosition?> get() = _courtPosition
+    val matchType: MutableLiveData<MatchType?> get() = _matchType
+    val preferredTime: MutableLiveData<PreferredTime?> get() = _preferredTime
     //endregion
 
     //region Getters
@@ -53,12 +52,15 @@ class ProfileViewModel : ViewModel() {
     //endregion
 
     //region Setters
-    fun setUserName(user: User) {
+    fun setUser(user: User) {
         Log.d("ProfileViewModel.SetUserName", "User: ${user.firstName} ${user.lastName}")
-
         val userName = "${user.firstName} ${user.lastName}"
-
         _userName.value = userName
+        _bestHand.value = user.bestHand
+        _courtPosition.value = user.courtPosition
+        _matchType.value = user.matchType
+        _preferredTime.value = user.preferredTime
+
     }
     //endregion
 
@@ -140,7 +142,7 @@ class ProfileViewModel : ViewModel() {
 
         // Data which needs to be updated
         val data = mapOf(
-            "matchType" to matchType
+            "preferredTime" to preferredTime
         )
 
         // Update data

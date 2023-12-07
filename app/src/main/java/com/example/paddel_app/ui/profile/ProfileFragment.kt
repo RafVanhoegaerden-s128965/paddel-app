@@ -46,12 +46,14 @@ class ProfileFragment : Fragment() {
         profileViewModel.userName.observe(viewLifecycleOwner, Observer { userName ->
             userName?.let {
                 userNameTextView.text = it
+
             }
         })
 
         profileViewModel.bestHand.observe(viewLifecycleOwner, Observer { bestHand ->
             bestHand?.let {
                 bestHandTextView.text = it.toString()
+                Log.d("ProfileViewModel", "Best hand: ${it.toString()}" )
             }
         })
 
