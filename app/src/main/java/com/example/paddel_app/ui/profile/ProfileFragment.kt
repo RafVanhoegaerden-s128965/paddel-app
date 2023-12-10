@@ -34,22 +34,17 @@ class ProfileFragment : Fragment() {
 
         profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
 
-        //region TextViews
+        //region UserName
         val userNameTextView: TextView = binding.usernameProfile
-        val bestHandTextView: TextView = binding.bestHandTextView
-        val courtPositionTextView: TextView = binding.courtPositionTextView
-        val matchTypeTextView: TextView = binding.matchTypeTextView
-        val preferredTimeTextView: TextView = binding.preferredTimeTextView
-        //endregion
-
-        //region Observables
         profileViewModel.userName.observe(viewLifecycleOwner, Observer { userName ->
             userName?.let {
                 userNameTextView.text = it
-
             }
         })
+        //endregion
 
+        //region BestHand
+        val bestHandTextView: TextView = binding.bestHandTextView
         profileViewModel.bestHand.observe(viewLifecycleOwner, Observer { bestHand ->
             bestHand?.let {
                 bestHandTextView.text = it.toString()
@@ -57,29 +52,6 @@ class ProfileFragment : Fragment() {
             }
         })
 
-        profileViewModel.courtPosition.observe(viewLifecycleOwner, Observer { courtPosition ->
-            courtPosition?.let {
-                courtPositionTextView.text = it.toString()
-            }
-        })
-
-        profileViewModel.matchType.observe(viewLifecycleOwner, Observer { matchType ->
-            matchType?.let {
-                matchTypeTextView.text = it.toString()
-            }
-        })
-
-        profileViewModel.preferredTime.observe(viewLifecycleOwner, Observer { preferredTime ->
-            preferredTime?.let {
-                preferredTimeTextView.text = it.toString()
-            }
-        })
-
-        //endregion
-
-        //region Buttons
-
-        //region BestHand
         val leftHandBtn: Button = binding.leftHandBtn
         leftHandBtn.setOnClickListener() {
             profileViewModel.updateBestHand(Hand.LEFT)
@@ -95,6 +67,13 @@ class ProfileFragment : Fragment() {
         //endregion
 
         //region CourtPosition
+        val courtPositionTextView: TextView = binding.courtPositionTextView
+        profileViewModel.courtPosition.observe(viewLifecycleOwner, Observer { courtPosition ->
+            courtPosition?.let {
+                courtPositionTextView.text = it.toString()
+            }
+        })
+
         val foreHandBtn: Button = binding.foreHandBtn
         foreHandBtn.setOnClickListener(){
             profileViewModel.updateCourtPosition(CourtPosition.FOREHAND)
@@ -106,6 +85,13 @@ class ProfileFragment : Fragment() {
         //endregion
 
         //region MatchType
+        val matchTypeTextView: TextView = binding.matchTypeTextView
+        profileViewModel.matchType.observe(viewLifecycleOwner, Observer { matchType ->
+            matchType?.let {
+                matchTypeTextView.text = it.toString()
+            }
+        })
+
         val comptetitveBtn: Button = binding.comptetitveBtn
         comptetitveBtn.setOnClickListener(){
             profileViewModel.updateMatchType(MatchType.COMPETITIVE)
@@ -121,6 +107,13 @@ class ProfileFragment : Fragment() {
         //endregion
 
         //region PreferredTime
+        val preferredTimeTextView: TextView = binding.preferredTimeTextView
+        profileViewModel.preferredTime.observe(viewLifecycleOwner, Observer { preferredTime ->
+            preferredTime?.let {
+                preferredTimeTextView.text = it.toString()
+            }
+        })
+
         val morningBtn: Button = binding.morningBtn
         morningBtn.setOnClickListener(){
             profileViewModel.updatePreferredTime(PreferredTime.MORNING)
@@ -135,7 +128,6 @@ class ProfileFragment : Fragment() {
         }
         //endregion
 
-        //endregion
         return root
     }
 

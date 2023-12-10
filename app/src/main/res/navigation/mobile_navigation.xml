@@ -23,4 +23,10 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/navigation_bookCourt"
+        android:name="com.example.paddel_app.ui.bookCourt.BookCourtFragment"
+        android:label="@string/title_bookCourt"
+        tools:layout="@layout/fragment_book_court" />
+
 </navigation>

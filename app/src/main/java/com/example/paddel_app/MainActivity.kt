@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.paddel_app.databinding.ActivityMainBinding
 import com.example.paddel_app.model.Court
 import com.example.paddel_app.model.User
+import com.example.paddel_app.ui.play.PlayViewModel
 import com.example.paddel_app.ui.profile.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var playViewModel: PlayViewModel
     private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        playViewModel = ViewModelProvider(this).get(PlayViewModel::class.java)
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         //region NavigationBar
@@ -75,8 +78,6 @@ class MainActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             Log.d("currentUser", "user: ${user.email.toString()}")
-            Log.d("currentUser", "user: ${user.email.toString()}")
-
         }
         val userId = user!!.uid
 
