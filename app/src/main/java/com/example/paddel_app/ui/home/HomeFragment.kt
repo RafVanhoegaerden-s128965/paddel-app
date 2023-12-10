@@ -35,35 +35,5 @@ class HomeFragment : Fragment() {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        val btnMakeReservation: Button = binding.btnMakeReservation
-        btnMakeReservation.setOnClickListener {
-            // Call the function to get and display the court list
-            (activity as? MainActivity)?.getCourts { courts ->
-                val courtNames = courts.map { it.name }
-                showCourtListPopup(courtNames)
-            }
-        }
-    }
-
-    private fun showCourtListPopup(courtList: List<String>) {
-        val popupView = layoutInflater.inflate(R.layout.popup_court, null)
-
-        val listView: ListView = popupView.findViewById(R.id.listViewCourts)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, courtList)
-        listView.adapter = adapter
-
-        val popupWindow = PopupWindow(
-            popupView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        // Set the dismiss listener
-        popupWindow.setOnDismissListener {
-            // Handle dismiss event if needed
-        }
-
-        // Show the popup at the center of the screen
-        popupWindow.showAtLocation(requireView(), Gravity.CENTER, 0, 0)
     }
 }

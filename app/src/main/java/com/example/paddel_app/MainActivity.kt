@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_profile
+                R.id.navigation_home, R.id.navigation_play, R.id.navigation_profile
             )
         )
 
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         //endregion
 
+        //region Getters
         getUser { user ->
             if (user != null) {
                 Log.d("MainActivity", "User: ${user.firstName} ${user.lastName}")
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Court: ${court}")
             }
         }
+        //endregion
     }
 
     private fun getUser(callback: (User?) -> Unit) {
