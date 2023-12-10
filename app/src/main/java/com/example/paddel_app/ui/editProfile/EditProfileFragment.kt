@@ -1,7 +1,6 @@
-package com.example.paddel_app.ui.home
+package com.example.paddel_app.ui.editProfile
 import HomeViewModel
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.paddel_app.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class EditProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var editProfileViewModel: EditProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +24,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        editProfileViewModel = ViewModelProvider(this).get(EditProfileViewModel::class.java)
 
     }
 }
