@@ -19,7 +19,6 @@ import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentHomeBinding
 import com.example.paddel_app.databinding.FragmentPlayBinding
 import com.example.paddel_app.model.Court
-import com.example.paddel_app.ui.bookCourt.BookCourtFragment
 
 class PlayFragment : Fragment() {
 
@@ -44,7 +43,7 @@ class PlayFragment : Fragment() {
                 //val courtNames = courts.map { it.name }
                 //showCourtListPopup(courtNames)
 
-                //TODO Switch fragment
+                //TODO Switch Activity
 
             }
         }
