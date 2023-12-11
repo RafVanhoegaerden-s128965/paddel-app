@@ -1,7 +1,6 @@
 package com.example.paddel_app.ui.profile
 
 import android.os.Bundle
-import android.service.autofill.FieldClassification.Match
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.example.paddel_app.enum.CourtPosition
 import com.example.paddel_app.enum.Hand
 import com.example.paddel_app.enum.MatchType
 import com.example.paddel_app.enum.PreferredTime
-import org.w3c.dom.Text
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -92,8 +90,8 @@ class ProfileFragment : Fragment() {
             }
         })
 
-        val comptetitveBtn: Button = binding.comptetitveBtn
-        comptetitveBtn.setOnClickListener(){
+        val competitiveBtn: Button = binding.comptetitveBtn
+        competitiveBtn.setOnClickListener(){
             profileViewModel.updateMatchType(MatchType.COMPETITIVE)
         }
         val friendlyBtn: Button = binding.friendlyBtn

@@ -12,10 +12,13 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.PopupWindow
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.MainActivity
 import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentHomeBinding
 import com.example.paddel_app.databinding.FragmentPlayBinding
+import com.example.paddel_app.model.Court
 import com.example.paddel_app.ui.bookCourt.BookCourtFragment
 
 class PlayFragment : Fragment() {
@@ -34,13 +37,11 @@ class PlayFragment : Fragment() {
 
         playViewModel = ViewModelProvider(this).get(PlayViewModel::class.java)
 
-
-
         val btnMakeReservation: Button = binding.btnBookCourt
         btnMakeReservation.setOnClickListener {
             // Call the function to get and display the court list
             (activity as? MainActivity)?.getCourts { courts ->
-                val courtNames = courts.map { it.name }
+                //val courtNames = courts.map { it.name }
                 //showCourtListPopup(courtNames)
 
                 //TODO Switch fragment

@@ -51,7 +51,7 @@ class ProfileViewModel : ViewModel() {
     }
     //endregion
 
-    //region Setters
+    //region Setter
     fun setUser(user: User) {
         Log.d("ProfileViewModel.SetUserName", "User: ${user.firstName} ${user.lastName}")
         val userName = "${user.firstName} ${user.lastName}"
