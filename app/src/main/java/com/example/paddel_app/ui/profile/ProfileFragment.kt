@@ -124,6 +124,10 @@ class ProfileFragment : Fragment() {
         eveningBtn.setOnClickListener(){
             profileViewModel.updatePreferredTime(PreferredTime.EVENING)
         }
+        val allDayBtn: Button = binding.allDayBtn
+        allDayBtn.setOnClickListener(){
+            profileViewModel.updatePreferredTime(PreferredTime.ALL_DAY)
+        }
         //endregion
 
         return root

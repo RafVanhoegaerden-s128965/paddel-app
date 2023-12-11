@@ -13,5 +13,5 @@ enum class MatchType {
 }
 
 enum class PreferredTime {
-    MORNING, AFTERNOON, EVENING
+    MORNING, AFTERNOON, EVENING, ALL_DAY
 }
