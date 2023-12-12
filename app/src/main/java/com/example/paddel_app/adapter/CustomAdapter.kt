@@ -22,9 +22,7 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         val clubPriceTextView: TextView = itemView.findViewById(R.id.textViewPrice)
         val clubOpenClosedTextView: TextView = itemView.findViewById(R.id.textViewOpenClosedHours)
         val clubClosedDays: TextView = itemView.findViewById(R.id.textViewClosedDays)
-
         val bookBtn: Button = itemView.findViewById(R.id.bookBtn)
-        // Add other views according to your XML layout
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,7 +49,6 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         holder.bookBtn.setOnClickListener {
             holder.itemView.findNavController().navigate(R.id.navigation_bookingDetails)
         }
-        // Bind other views according to your XML layout
     }
 
     private class CourtDiffCallback : DiffUtil.ItemCallback<Court>() {

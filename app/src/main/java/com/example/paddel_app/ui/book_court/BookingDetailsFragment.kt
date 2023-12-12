@@ -1,4 +1,3 @@
-// BookingDetailsFragment
 package com.example.paddel_app.ui.book_court
 
 import android.os.Bundle
@@ -15,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.R
-import com.example.paddel_app.databinding.FragmentBookCourtBinding
 import com.example.paddel_app.databinding.FragmentBookingDetailsBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -89,25 +87,25 @@ class BookingDetailsFragment : Fragment() {
         recyclerViewTimeSlots.adapter = timeSlotsAdapter
 
         // Observe changes in the list of time slots
-        viewModel.getTimeSlots().observe(viewLifecycleOwner, { timeSlots ->
+        viewModel.getTimeSlots().observe(viewLifecycleOwner) { timeSlots ->
             // Update the adapter with the new list of time slots
             timeSlotsAdapter.submitList(timeSlots)
             // Show or hide the RecyclerView based on the availability of time slots
             recyclerViewTimeSlots.visibility = if (timeSlots.isEmpty()) View.GONE else View.VISIBLE
-        })
+        }
 
         return root
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 // Handle the Up-button click
                 findNavController().navigateUp()
-                return true
+                true
             }
             // Handle other menu items if needed
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

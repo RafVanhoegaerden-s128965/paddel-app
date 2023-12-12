@@ -26,10 +26,10 @@ class BookingDetailsViewModel : ViewModel() {
 
     // Fetch time slots based on the selected date and court ID
     fun fetchTimeSlots() {
-        // TODO: Implement logic to fetch time slots based on selected date and court ID
-        // For now, using dummy data
+
         loadDummyTimeSlots()
     }
+
 
     // Dummy function to load sample time slots
     private fun loadDummyTimeSlots() {
