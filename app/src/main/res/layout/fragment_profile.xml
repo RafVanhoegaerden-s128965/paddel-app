@@ -67,11 +67,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -87,38 +89,40 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/leftHandBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="Left"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/ambidextrousBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="2"
                             android:text="Ambidextrous"
                             android:textColor="#000000"
                             android:textSize="13sp" />
-
                         <Button
                             android:id="@+id/rightHandBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="Right"
                             android:textColor="#000000"
                             android:textSize="13sp" />
                     </LinearLayout>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -147,27 +151,28 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="start|left"
                         android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/foreHandBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="Forehand"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/backHandBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="Backhand"
                             android:textColor="#000000"
                             android:textSize="13sp" />
                     </LinearLayout>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -175,11 +180,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -196,46 +203,49 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="start|left"
                         android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/comptetitveBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Comptetitive"
-                            android:textColor="#000000"
-                            android:textSize="13sp" />
-
                         <Button
                             android:id="@+id/friendlyBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1.6"
                             android:text="Friendly"
                             android:textColor="#000000"
                             android:textSize="13sp" />
-
                         <Button
                             android:id="@+id/bothMatchTypeBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="Both"
+                            android:textColor="#000000"
+                            android:textSize="13sp" />
+                        <Button
+                            android:id="@+id/comptetitveBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.7"
+                            android:text="Competitive"
                             android:textColor="#000000"
                             android:textSize="13sp" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -252,37 +262,41 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="start|left"
                         android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/morningBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="Morning"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/afternoonBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1.2"
                             android:text="Afternoon"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/eveningBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="Evening"
                             android:textColor="#000000"
                             android:textSize="13sp" />
                     </LinearLayout>
+
                     <Button
                         android:id="@+id/allDayBtn"
-                        android:layout_width="315dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="All Day"
                         android:textColor="#000000"

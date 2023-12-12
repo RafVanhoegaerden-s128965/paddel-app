@@ -45,7 +45,8 @@ class ProfileFragment : Fragment() {
         val bestHandTextView: TextView = binding.bestHandTextView
         profileViewModel.bestHand.observe(viewLifecycleOwner, Observer { bestHand ->
             bestHand?.let {
-                bestHandTextView.text = it.toString()
+                val lowercaseBestHand = it.name.toLowerCase().capitalize()
+                bestHandTextView.text = lowercaseBestHand
                 Log.d("ProfileViewModel", "Best hand: ${it.toString()}" )
             }
         })
@@ -68,7 +69,8 @@ class ProfileFragment : Fragment() {
         val courtPositionTextView: TextView = binding.courtPositionTextView
         profileViewModel.courtPosition.observe(viewLifecycleOwner, Observer { courtPosition ->
             courtPosition?.let {
-                courtPositionTextView.text = it.toString()
+                val lowerCaseCourtPosition = it.name.toLowerCase().capitalize()
+                courtPositionTextView.text = lowerCaseCourtPosition
             }
         })
 
@@ -86,7 +88,8 @@ class ProfileFragment : Fragment() {
         val matchTypeTextView: TextView = binding.matchTypeTextView
         profileViewModel.matchType.observe(viewLifecycleOwner, Observer { matchType ->
             matchType?.let {
-                matchTypeTextView.text = it.toString()
+                val lowerCaseMatchType = it.name.toLowerCase().capitalize()
+                matchTypeTextView.text = lowerCaseMatchType
             }
         })
 
@@ -108,7 +111,11 @@ class ProfileFragment : Fragment() {
         val preferredTimeTextView: TextView = binding.preferredTimeTextView
         profileViewModel.preferredTime.observe(viewLifecycleOwner, Observer { preferredTime ->
             preferredTime?.let {
-                preferredTimeTextView.text = it.toString()
+                val displayText = when (it) {
+                    PreferredTime.ALL_DAY -> "All day"
+                    else -> it.name.toLowerCase().capitalize()
+                }
+                preferredTimeTextView.text = displayText
             }
         })
 

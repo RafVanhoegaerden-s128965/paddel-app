@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.R
 import com.example.paddel_app.model.Court
+import org.w3c.dom.Text
 
 class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCallback()) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val clubNameTextView: TextView = itemView.findViewById(R.id.textViewName)
         val clubAddressTextView: TextView = itemView.findViewById(R.id.textViewAddress)
+        val clubPriceTextView: TextView = itemView.findViewById(R.id.textViewPrice)
+        val clubOpenClosedTextView: TextView = itemView.findViewById(R.id.textViewOpenClosedHours)
+        val clubClosedDays: TextView = itemView.findViewById(R.id.textViewClosedDays)
+
         // Add other views according to your XML layout
     }
 
@@ -31,6 +36,14 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         val data = getItem(position)
         holder.clubNameTextView.text = data.name
         holder.clubAddressTextView.text = data.address
+        holder.clubPriceTextView.text = "€ ${data.price}"
+        holder.clubOpenClosedTextView.text = data.openClosedHours
+
+        // Closed Days
+        val closedDaysString = data.closedDays.joinToString(", ")
+        val formattedClosedDays = closedDaysString.split(", ").joinToString(", ") { it.toLowerCase().capitalize() }
+        holder.clubClosedDays.text = formattedClosedDays
+
         // Bind other views according to your XML layout
     }
 

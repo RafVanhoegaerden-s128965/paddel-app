@@ -60,7 +60,6 @@ class ProfileViewModel : ViewModel() {
         _courtPosition.value = user.courtPosition
         _matchType.value = user.matchType
         _preferredTime.value = user.preferredTime
-
     }
     //endregion
 
