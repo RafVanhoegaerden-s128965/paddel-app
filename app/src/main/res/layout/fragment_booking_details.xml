@@ -1,4 +1,4 @@
-<!-- res/layout/fragment_date_picker.xml -->
+<!-- res/layout/fragment_booking_details.xml -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,15 +10,23 @@
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        tools:ignore="MissingClass" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
     <Button
-        android:id="@+id/btnNext"
+        android:id="@+id/btnConfirmDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/datePicker"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Next" />
+        android:text="Confirm Date" />
+
+    <!-- RecyclerView for displaying time slots -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTimeSlots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnConfirmDate"
+        android:layout_marginTop="16dp"/>
 </RelativeLayout>
