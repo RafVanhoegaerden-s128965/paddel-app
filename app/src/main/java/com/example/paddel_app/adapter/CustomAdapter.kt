@@ -49,7 +49,7 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         holder.clubClosedDays.text = "Closed: ${formattedClosedDays}"
 
         holder.bookBtn.setOnClickListener {
-            holder.itemView.findNavController().navigate(R.id.navigation_bookCourt)
+            holder.itemView.findNavController().navigate(R.id.navigation_bookingDetails)
         }
         // Bind other views according to your XML layout
     }

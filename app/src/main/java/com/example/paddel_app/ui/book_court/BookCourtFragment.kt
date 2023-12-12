@@ -67,7 +67,6 @@ class BookCourtFragment : Fragment() {
         })
 
 
-
         return root
     }
 

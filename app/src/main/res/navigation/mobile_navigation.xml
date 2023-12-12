@@ -29,4 +29,10 @@
         android:label="@string/title_bookCourt"
         tools:layout="@layout/fragment_book_court" />
 
+    <fragment
+        android:id="@+id/navigation_bookingDetails"
+        android:name="com.example.paddel_app.ui.book_court.BookingDetailsFragment"
+        android:label="@string/title_bookCourt"
+        tools:layout="@layout/fragment_booking_details" />
+
 </navigation>
