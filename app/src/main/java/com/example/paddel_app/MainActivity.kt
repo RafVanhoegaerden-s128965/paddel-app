@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         getCourts { courts ->
             for (court in courts) {
                 Log.d("MainActivity", "Court: ${court}")
+                playViewModel.setCourtsList(courts)
             }
         }
         //endregion
