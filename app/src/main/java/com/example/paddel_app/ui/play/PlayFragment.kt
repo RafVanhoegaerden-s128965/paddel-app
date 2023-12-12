@@ -9,9 +9,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.MainActivity
+import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentPlayBinding
 
 class PlayFragment : Fragment() {
@@ -56,7 +59,7 @@ class PlayFragment : Fragment() {
         val btnMakeReservation: Button = binding.btnBookCourt
         btnMakeReservation.setOnClickListener {
             // Call the function to get and display the court list
-
+            findNavController().navigate(R.id.navigation_bookCourt)
         }
 
         return root
