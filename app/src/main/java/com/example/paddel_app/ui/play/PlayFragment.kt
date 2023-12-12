@@ -39,6 +39,11 @@ class PlayFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
+        // Load Courts
+        (activity as? MainActivity)?.getCourts { courts ->
+            playViewModel.setCourtsList(courts)
+        }
+
         // Observe changes in the courts list
         playViewModel.getCourtsList().observe(viewLifecycleOwner, Observer { courtsList ->
             // Update the UI with the new list of courts
@@ -51,9 +56,7 @@ class PlayFragment : Fragment() {
         val btnMakeReservation: Button = binding.btnBookCourt
         btnMakeReservation.setOnClickListener {
             // Call the function to get and display the court list
-            (activity as? MainActivity)?.getCourts { courts ->
-                playViewModel.setCourtsList(courts)
-            }
+
         }
 
         return root

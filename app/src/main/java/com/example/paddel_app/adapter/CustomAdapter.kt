@@ -37,12 +37,12 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         holder.clubNameTextView.text = data.name
         holder.clubAddressTextView.text = data.address
         holder.clubPriceTextView.text = "€ ${data.price}"
-        holder.clubOpenClosedTextView.text = data.openClosedHours
+        holder.clubOpenClosedTextView.text = "Open: ${data.openClosedHours}"
 
         // Closed Days
         val closedDaysString = data.closedDays.joinToString(", ")
         val formattedClosedDays = closedDaysString.split(", ").joinToString(", ") { it.toLowerCase().capitalize() }
-        holder.clubClosedDays.text = formattedClosedDays
+        holder.clubClosedDays.text = "Closed: ${formattedClosedDays}"
 
         // Bind other views according to your XML layout
     }
