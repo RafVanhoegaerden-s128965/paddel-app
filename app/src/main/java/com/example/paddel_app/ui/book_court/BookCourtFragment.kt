@@ -7,16 +7,21 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.example.paddel_app.MainActivity
 import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentBookCourtBinding
 import com.example.paddel_app.databinding.FragmentPlayBinding
+import com.example.paddel_app.ui.play.PlayViewModel
 
 class BookCourtFragment : Fragment() {
 
     private var _binding: FragmentBookCourtBinding? = null
     private lateinit var bookCourtViewModel: BookCourtViewModel
+
+    private lateinit var clubSpinner: Spinner
 
     private val binding get() = _binding!!
 
@@ -33,6 +38,13 @@ class BookCourtFragment : Fragment() {
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
         //endregion
+
+        // Load Courts
+        (activity as? MainActivity)?.getCourts { courts ->
+            //playViewModel.setCourtsList(courts)
+        }
+
+
 
         return root
     }

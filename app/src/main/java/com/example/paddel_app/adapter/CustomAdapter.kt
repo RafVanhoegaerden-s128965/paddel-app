@@ -3,7 +3,10 @@ package com.example.paddel_app.ui.play
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +23,7 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         val clubOpenClosedTextView: TextView = itemView.findViewById(R.id.textViewOpenClosedHours)
         val clubClosedDays: TextView = itemView.findViewById(R.id.textViewClosedDays)
 
+        val bookBtn: Button = itemView.findViewById(R.id.bookBtn)
         // Add other views according to your XML layout
     }
 
@@ -44,6 +48,9 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         val formattedClosedDays = closedDaysString.split(", ").joinToString(", ") { it.toLowerCase().capitalize() }
         holder.clubClosedDays.text = "Closed: ${formattedClosedDays}"
 
+        holder.bookBtn.setOnClickListener {
+            holder.itemView.findNavController().navigate(R.id.navigation_bookCourt)
+        }
         // Bind other views according to your XML layout
     }
 
