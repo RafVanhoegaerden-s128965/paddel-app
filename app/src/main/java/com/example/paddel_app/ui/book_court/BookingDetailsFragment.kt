@@ -3,20 +3,27 @@ package com.example.paddel_app.ui.book_court
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.DatePicker
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.R
+import com.example.paddel_app.databinding.FragmentBookCourtBinding
+import com.example.paddel_app.databinding.FragmentBookingDetailsBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class BookingDetailsFragment : Fragment() {
+
+    private var _binding: FragmentBookingDetailsBinding? = null
 
     private lateinit var datePicker: DatePicker
     private lateinit var btnConfirmDate: Button
@@ -24,15 +31,25 @@ class BookingDetailsFragment : Fragment() {
     private lateinit var timeSlotsAdapter: TimeSlotsAdapter
     private lateinit var viewModel: BookingDetailsViewModel
 
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_booking_details, container, false)
+        _binding = FragmentBookingDetailsBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
         datePicker = root.findViewById(R.id.datePicker)
         btnConfirmDate = root.findViewById(R.id.btnConfirmDate)
         recyclerViewTimeSlots = root.findViewById(R.id.recyclerViewTimeSlots)
+
+        //region Up-Button
+        // Go back to original fragment logic
+        val activity = requireActivity() as AppCompatActivity
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+        //endregion
 
         // Set the minimum allowed date to the current date
         val calendar = Calendar.getInstance()
@@ -80,5 +97,22 @@ class BookingDetailsFragment : Fragment() {
         })
 
         return root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Handle the Up-button click
+                findNavController().navigateUp()
+                return true
+            }
+            // Handle other menu items if needed
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
