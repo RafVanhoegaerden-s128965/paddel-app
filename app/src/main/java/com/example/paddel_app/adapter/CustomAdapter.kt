@@ -5,6 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -12,10 +15,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.R
 import com.example.paddel_app.model.Court
+import com.example.paddel_app.ui.book_court.BookingDetailsViewModel
 import org.w3c.dom.Text
 
 class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCallback()) {
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val clubNameTextView: TextView = itemView.findViewById(R.id.textViewName)
         val clubAddressTextView: TextView = itemView.findViewById(R.id.textViewAddress)
@@ -47,7 +50,15 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
         holder.clubClosedDays.text = "Closed: ${formattedClosedDays}"
 
         holder.bookBtn.setOnClickListener {
-            holder.itemView.findNavController().navigate(R.id.navigation_bookingDetails)
+            val bundle = bundleOf("courtId" to data.id)
+            holder.itemView.findNavController().navigate(R.id.navigation_bookingDetails, bundle)
+
+            // Get BookingsDetailsViewModel
+            val bookingDetailsViewModel = ViewModelProvider(holder.itemView.findViewTreeViewModelStoreOwner()!!).get(BookingDetailsViewModel::class.java)
+
+            // Select Court & Set in BookingDetailsViewModel
+            val selectedCourt = data
+            bookingDetailsViewModel.setCourt(selectedCourt)
         }
     }
 

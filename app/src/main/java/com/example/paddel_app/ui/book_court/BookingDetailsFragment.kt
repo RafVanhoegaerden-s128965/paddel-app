@@ -1,12 +1,14 @@
 package com.example.paddel_app.ui.book_court
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.DatePicker
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +29,7 @@ class BookingDetailsFragment : Fragment() {
     private lateinit var btnConfirmDate: Button
     private lateinit var recyclerViewTimeSlots: RecyclerView
     private lateinit var timeSlotsAdapter: TimeSlotsAdapter
-    private lateinit var viewModel: BookingDetailsViewModel
+    private lateinit var bookingDetailsViewModel: BookingDetailsViewModel
 
     private val binding get() = _binding!!
 
@@ -37,6 +39,20 @@ class BookingDetailsFragment : Fragment() {
     ): View? {
         _binding = FragmentBookingDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        // Get CourtId
+        val bundle = arguments
+        if (bundle != null && bundle.containsKey("courtId")) {
+            // Hier krijg je de courtId uit de bundel
+            val courtId = bundle.getString("courtId", "")
+
+            // Nu kun je de courtId gebruiken zoals nodig in je fragment
+            // Bijvoorbeeld, toon het in een TextView
+            Log.d("BookingDetails.CourtId","Court ID: ${courtId}")
+        }
+
+        // Initialize ViewModel
+        bookingDetailsViewModel = ViewModelProvider(this).get(BookingDetailsViewModel::class.java)
 
         datePicker = root.findViewById(R.id.datePicker)
         btnConfirmDate = root.findViewById(R.id.btnConfirmDate)
@@ -49,12 +65,10 @@ class BookingDetailsFragment : Fragment() {
         setHasOptionsMenu(true)
         //endregion
 
+        //region DatePicker
         // Set the minimum allowed date to the current date
         val calendar = Calendar.getInstance()
         datePicker.minDate = System.currentTimeMillis() - 1000
-
-        // Initialize ViewModel
-        viewModel = ViewModelProvider(this).get(BookingDetailsViewModel::class.java)
 
         // Add OnDateChangedListener to get the selected date
         datePicker.init(
@@ -71,13 +85,13 @@ class BookingDetailsFragment : Fragment() {
                     }.time
                 )
                 // Pass the selected date to the ViewModel
-                viewModel.setSelectedDate(selectedDate)
+                bookingDetailsViewModel.setSelectedDate(selectedDate)
             }
         )
-
+        //endregion
         btnConfirmDate.setOnClickListener {
             // Fetch and display time slots based on the selected date
-            viewModel.fetchTimeSlots()
+            bookingDetailsViewModel.fetchTimeSlots()
         }
 
         // Initialize the RecyclerView and adapter for time slots
@@ -87,7 +101,7 @@ class BookingDetailsFragment : Fragment() {
         recyclerViewTimeSlots.adapter = timeSlotsAdapter
 
         // Observe changes in the list of time slots
-        viewModel.getTimeSlots().observe(viewLifecycleOwner) { timeSlots ->
+        bookingDetailsViewModel.getTimeSlots().observe(viewLifecycleOwner) { timeSlots ->
             // Update the adapter with the new list of time slots
             timeSlotsAdapter.submitList(timeSlots)
             // Show or hide the RecyclerView based on the availability of time slots

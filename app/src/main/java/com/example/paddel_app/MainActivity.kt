@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.paddel_app.databinding.ActivityMainBinding
 import com.example.paddel_app.model.Court
 import com.example.paddel_app.model.User
+import com.example.paddel_app.ui.book_court.BookingDetailsViewModel
 import com.example.paddel_app.ui.play.PlayViewModel
 import com.example.paddel_app.ui.profile.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView

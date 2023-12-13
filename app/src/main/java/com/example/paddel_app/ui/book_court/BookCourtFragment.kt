@@ -62,7 +62,8 @@ class BookCourtFragment : Fragment() {
             // Update the UI with the new list of courts
             adapter.submitList(courtsList)
             for (court in courtsList) {
-                Log.d("BookCourtFragment", "Court: ${court}")
+                //Log.d("BookCourtFragment", "Court: ${court}")
+                Log.d("BookCourtFragment","Court ID: ${court.id}")
             }
         })
 
