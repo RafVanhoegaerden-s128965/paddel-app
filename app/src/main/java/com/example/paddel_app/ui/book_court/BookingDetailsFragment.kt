@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentBookingDetailsBinding
+import com.example.paddel_app.model.Court
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -30,6 +32,7 @@ class BookingDetailsFragment : Fragment() {
     private lateinit var recyclerViewTimeSlots: RecyclerView
     private lateinit var timeSlotsAdapter: TimeSlotsAdapter
     private lateinit var bookingDetailsViewModel: BookingDetailsViewModel
+    private lateinit var selectedDate: String // Declare selectedDate at a higher scope
 
     private val binding get() = _binding!!
 
@@ -46,14 +49,24 @@ class BookingDetailsFragment : Fragment() {
             // Hier krijg je de courtId uit de bundel
             val courtId = bundle.getString("courtId", "")
 
-            // Nu kun je de courtId gebruiken zoals nodig in je fragment
-            // Bijvoorbeeld, toon het in een TextView
-            Log.d("BookingDetails.CourtId","Court ID: ${courtId}")
+            getCourtWithID(courtId) { court ->
+                if (court != null) {
+                    Log.d("BookingDetails.CourtName", "Court Name: ${court.name}")
+
+                    val courtName: TextView = root.findViewById(R.id.courtName)
+                    courtName.text = "Court Name: ${court.name}"
+
+                    // Set Court in ViewModel
+                    bookingDetailsViewModel.setCourt(court)
+                } else {
+                    // Geen gevonden met de opgegeven ID
+                    Log.e("BookingDetails", "No court found with ID: $courtId")
+                }
+            }
         }
 
         // Initialize ViewModel
         bookingDetailsViewModel = ViewModelProvider(this).get(BookingDetailsViewModel::class.java)
-
         datePicker = root.findViewById(R.id.datePicker)
         btnConfirmDate = root.findViewById(R.id.btnConfirmDate)
         recyclerViewTimeSlots = root.findViewById(R.id.recyclerViewTimeSlots)
@@ -70,6 +83,15 @@ class BookingDetailsFragment : Fragment() {
         val calendar = Calendar.getInstance()
         datePicker.minDate = System.currentTimeMillis() - 1000
 
+        // Declare selectedDate outside the listener
+        selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
+            Calendar.getInstance().apply {
+                set(Calendar.YEAR, datePicker.year)
+                set(Calendar.MONTH, datePicker.month)
+                set(Calendar.DAY_OF_MONTH, datePicker.dayOfMonth)
+            }.time
+        )
+
         // Add OnDateChangedListener to get the selected date
         datePicker.init(
             calendar.get(Calendar.YEAR),
@@ -77,19 +99,21 @@ class BookingDetailsFragment : Fragment() {
             calendar.get(Calendar.DAY_OF_MONTH),
             DatePicker.OnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
                 // Handle the date change event
-                val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
+                selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
                     Calendar.getInstance().apply {
                         set(Calendar.YEAR, year)
                         set(Calendar.MONTH, monthOfYear)
                         set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     }.time
                 )
-                // Pass the selected date to the ViewModel
-                bookingDetailsViewModel.setSelectedDate(selectedDate)
             }
         )
         //endregion
+
         btnConfirmDate.setOnClickListener {
+            // Use the selected date here
+            bookingDetailsViewModel.setSelectedDate(selectedDate)
+
             // Fetch and display time slots based on the selected date
             bookingDetailsViewModel.fetchTimeSlots()
         }
@@ -126,5 +150,32 @@ class BookingDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getCourtWithID(courtId: String, callback: (Court?) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val courtsCollection = db.collection("courts")
+
+        val courtRef = courtsCollection.document(courtId)
+
+        courtRef.get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // Convert the document to a Court object
+                    val court = document.toObject(Court::class.java)
+                    court?.id = document.id
+
+                    // Invoke the callback with the retrieved court (or null if not found)
+                    callback(court)
+                } else {
+                    // Document with the specified ID not found
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("BookingDetailsFragment", "Firestore query failed: $exception")
+                // Handle errors here
+                callback(null)
+            }
     }
 }

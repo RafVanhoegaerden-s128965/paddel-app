@@ -6,10 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.book_court.BookingDetailsFragment">
 
+    <TextView
+        android:id="@+id/courtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Court Name" />
+
+
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/courtName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
 
