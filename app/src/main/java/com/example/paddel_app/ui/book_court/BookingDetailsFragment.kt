@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentBookingDetailsBinding
 import com.example.paddel_app.model.Court
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -78,6 +79,21 @@ class BookingDetailsFragment : Fragment() {
         setHasOptionsMenu(true)
         //endregion
 
+        // Initialize the RecyclerView and adapter for time slots
+        timeSlotsAdapter = TimeSlotsAdapter()
+
+        recyclerViewTimeSlots.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewTimeSlots.adapter = timeSlotsAdapter
+
+        // Observe changes in the list of time slots
+        bookingDetailsViewModel.getTimeSlots().observe(viewLifecycleOwner) { timeSlots ->
+            // Update the adapter with the new list of time slots
+            timeSlotsAdapter.submitList(timeSlots)
+            // Show or hide the RecyclerView based on the availability of time slots
+            recyclerViewTimeSlots.visibility = if (timeSlots.isEmpty()) View.GONE else View.VISIBLE
+        }
+
         //region DatePicker
         // Set the minimum allowed date to the current date
         val calendar = Calendar.getInstance()
@@ -118,21 +134,23 @@ class BookingDetailsFragment : Fragment() {
             bookingDetailsViewModel.fetchTimeSlots()
         }
 
-        // Initialize the RecyclerView and adapter for time slots
-        timeSlotsAdapter = TimeSlotsAdapter()
-        recyclerViewTimeSlots.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerViewTimeSlots.adapter = timeSlotsAdapter
+        // Voeg hier de aanroep van createBooking toe wanneer een tijdslot wordt geselecteerd
+        timeSlotsAdapter.setOnItemClickListener { timeSlot ->
+            // Roep de createBooking-functie aan met het geselecteerde tijdslot
+            bookingDetailsViewModel.createBooking(timeSlot)
 
-        // Observe changes in the list of time slots
-        bookingDetailsViewModel.getTimeSlots().observe(viewLifecycleOwner) { timeSlots ->
-            // Update the adapter with the new list of time slots
-            timeSlotsAdapter.submitList(timeSlots)
-            // Show or hide the RecyclerView based on the availability of time slots
-            recyclerViewTimeSlots.visibility = if (timeSlots.isEmpty()) View.GONE else View.VISIBLE
+            // Voeg hier eventueel logica toe om de gebruiker te informeren dat de boeking is gemaakt
+            showBookingSuccessMessage()
+
+            // Navigeer naar de startpagina
+            findNavController().navigateUp()
         }
 
         return root
+    }
+    private fun showBookingSuccessMessage() {
+        val rootView = requireActivity().findViewById<View>(android.R.id.content)
+        Snackbar.make(rootView, "Booking successful!", Snackbar.LENGTH_LONG).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

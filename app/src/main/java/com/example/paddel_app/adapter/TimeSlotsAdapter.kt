@@ -12,6 +12,12 @@ import com.example.paddel_app.model.TimeSlot
 
 class TimeSlotsAdapter : ListAdapter<TimeSlot, TimeSlotsAdapter.TimeSlotViewHolder>(TimeSlotDiffCallback()) {
 
+    private var onItemClickListener: ((TimeSlot) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (TimeSlot) -> Unit) {
+        onItemClickListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeSlotViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_time_slot, parent, false)
         return TimeSlotViewHolder(view)
@@ -22,14 +28,17 @@ class TimeSlotsAdapter : ListAdapter<TimeSlot, TimeSlotsAdapter.TimeSlotViewHold
         holder.bind(timeSlot)
     }
 
-    class TimeSlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TimeSlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val btnTimeSlot: Button = itemView.findViewById(R.id.btnTimeSlot)
 
         fun bind(timeSlot: TimeSlot) {
             btnTimeSlot.text = timeSlot.time
             btnTimeSlot.isEnabled = timeSlot.isAvailable
-            // TODO: Add click listener to handle time slot selection
-            // You can use interface or LiveData to communicate the selected time slot back to the fragment
+
+            // Voeg hier een click listener toe om het tijdslot te selecteren
+            btnTimeSlot.setOnClickListener {
+                onItemClickListener?.invoke(timeSlot)
+            }
         }
     }
 
