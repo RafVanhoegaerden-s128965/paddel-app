@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,7 @@ import com.example.paddel_app.databinding.FragmentPlayBinding
 
 class PlayFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CustomAdapter
+    private lateinit var adapter: ClubsAdapter
 
     private var _binding: FragmentPlayBinding? = null
     private lateinit var playViewModel: PlayViewModel
@@ -30,14 +29,13 @@ class PlayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentPlayBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         playViewModel = ViewModelProvider(this).get(PlayViewModel::class.java)
 
         recyclerView = binding.recyclerView
-        adapter = CustomAdapter()
+        adapter = ClubsAdapter()
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter

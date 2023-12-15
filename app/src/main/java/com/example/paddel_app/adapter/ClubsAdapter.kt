@@ -9,16 +9,14 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.R
 import com.example.paddel_app.model.Court
 import com.example.paddel_app.ui.book_court.BookingDetailsViewModel
-import org.w3c.dom.Text
 
-class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCallback()) {
+class ClubsAdapter : ListAdapter<Court, ClubsAdapter.ViewHolder>(CourtDiffCallback()) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val clubNameTextView: TextView = itemView.findViewById(R.id.textViewName)
         val clubAddressTextView: TextView = itemView.findViewById(R.id.textViewAddress)
@@ -30,7 +28,7 @@ class CustomAdapter : ListAdapter<Court, CustomAdapter.ViewHolder>(CourtDiffCall
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_card,
+            R.layout.item_club,
             parent,
             false
         )

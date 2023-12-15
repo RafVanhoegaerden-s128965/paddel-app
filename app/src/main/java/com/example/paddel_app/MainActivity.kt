@@ -1,6 +1,6 @@
 package com.example.paddel_app
 
-import HomeViewModel
+import DiscoverViewModel
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +10,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.paddel_app.databinding.ActivityMainBinding
+import com.example.paddel_app.model.Booking
 import com.example.paddel_app.model.Court
 import com.example.paddel_app.model.User
-import com.example.paddel_app.ui.book_court.BookingDetailsViewModel
 import com.example.paddel_app.ui.play.PlayViewModel
 import com.example.paddel_app.ui.profile.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,7 +23,7 @@ import com.google.firebase.firestore.toObject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var discoverViewModel: DiscoverViewModel
     private lateinit var playViewModel: PlayViewModel
     private lateinit var profileViewModel: ProfileViewModel
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
         playViewModel = ViewModelProvider(this).get(PlayViewModel::class.java)
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_play, R.id.navigation_profile
+                R.id.navigation_discover, R.id.navigation_play, R.id.navigation_profile
             )
         )
 
@@ -125,6 +125,27 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    // TODO Only get bookings from user, not it gets all bookings
+    fun getBookings(callback: (List<Booking>) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val bookingsCollection = db.collection("bookings")
 
+        bookingsCollection.get()
+            .addOnSuccessListener { result ->
+                val bookingsList = mutableListOf<Booking>()
 
+                for (document in result) {
+                    // Convert each document to a Court object
+                    val booking = document.toObject(Booking::class.java)
+                    booking.id = document.id
+                    bookingsList.add(booking)
+                }
+                // Invoke the callback with the list of courts
+                callback(bookingsList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("MainActivity", "Firestore query failed: $exception")
+                // Handle errors here
+            }
+    }
 }

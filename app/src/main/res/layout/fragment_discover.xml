@@ -12,58 +12,49 @@
         tools:context=".ui.play.PlayFragment">
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/openGamesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
-            android:text="Find your perfect match"
+            android:text="Open Games"
             android:textColor="#000000"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnBookCourt"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:layout_below="@id/titleTextView"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:text="Book a court" />
-
-        <Button
-            android:id="@+id/btnCreateMatch"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:layout_below="@+id/titleTextView"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:text="Create a Match"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
-
-        <TextView
-            android:id="@+id/clubsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnBookCourt"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
-            android:text="Your Clubs"
-            android:textColor="#000000"
-            android:textSize="32sp"
+            android:textSize="34sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/openGamesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/clubsTextView"
-            android:layout_marginTop="32dp"
+            android:layout_below="@id/openGamesTextView"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"/>
+            android:layout_marginBottom="32dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/bookingsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/openGamesRecyclerView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="Bookings"
+            android:textColor="#000000"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bookingsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bookingsTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp" />
 
     </RelativeLayout>
 </ScrollView>

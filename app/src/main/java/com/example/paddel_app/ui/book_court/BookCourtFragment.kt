@@ -8,23 +8,19 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.MainActivity
-import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentBookCourtBinding
-import com.example.paddel_app.databinding.FragmentPlayBinding
-import com.example.paddel_app.ui.play.CustomAdapter
-import com.example.paddel_app.ui.play.PlayViewModel
+import com.example.paddel_app.ui.play.ClubsAdapter
 
 class BookCourtFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CustomAdapter
+    private lateinit var adapter: ClubsAdapter
     private var _binding: FragmentBookCourtBinding? = null
     private lateinit var bookCourtViewModel: BookCourtViewModel
 
@@ -47,7 +43,7 @@ class BookCourtFragment : Fragment() {
         //endregion
 
         recyclerView = binding.recyclerView
-        adapter = CustomAdapter()
+        adapter = ClubsAdapter()
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
