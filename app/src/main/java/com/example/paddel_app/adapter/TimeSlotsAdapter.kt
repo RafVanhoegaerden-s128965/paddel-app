@@ -35,7 +35,7 @@ class TimeSlotsAdapter : ListAdapter<TimeSlot, TimeSlotsAdapter.TimeSlotViewHold
             btnTimeSlot.text = timeSlot.time
             btnTimeSlot.isEnabled = timeSlot.isAvailable
 
-            // Voeg hier een click listener toe om het tijdslot te selecteren
+            //Listener to select timeslot
             btnTimeSlot.setOnClickListener {
                 onItemClickListener?.invoke(timeSlot)
             }

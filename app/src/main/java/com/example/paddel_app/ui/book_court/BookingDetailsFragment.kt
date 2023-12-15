@@ -20,6 +20,7 @@ import com.example.paddel_app.databinding.FragmentBookingDetailsBinding
 import com.example.paddel_app.model.Court
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -31,6 +32,7 @@ class BookingDetailsFragment : Fragment() {
     private lateinit var datePicker: DatePicker
     private lateinit var btnConfirmDate: Button
     private lateinit var recyclerViewTimeSlots: RecyclerView
+    private lateinit var closedDayTextView: TextView
     private lateinit var timeSlotsAdapter: TimeSlotsAdapter
     private lateinit var bookingDetailsViewModel: BookingDetailsViewModel
     private lateinit var selectedDate: String // Declare selectedDate at a higher scope
@@ -44,7 +46,7 @@ class BookingDetailsFragment : Fragment() {
         _binding = FragmentBookingDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Get CourtId
+        //region GetCourtId
         val bundle = arguments
         if (bundle != null && bundle.containsKey("courtId")) {
             // Hier krijg je de courtId uit de bundel
@@ -55,7 +57,7 @@ class BookingDetailsFragment : Fragment() {
                     Log.d("BookingDetails.CourtName", "Court Name: ${court.name}")
 
                     val courtName: TextView = root.findViewById(R.id.courtName)
-                    courtName.text = "Court Name: ${court.name}"
+                    courtName.text = court.name
 
                     // Set Court in ViewModel
                     bookingDetailsViewModel.setCourt(court)
@@ -65,12 +67,14 @@ class BookingDetailsFragment : Fragment() {
                 }
             }
         }
+        //endregion
 
         // Initialize ViewModel
         bookingDetailsViewModel = ViewModelProvider(this).get(BookingDetailsViewModel::class.java)
         datePicker = root.findViewById(R.id.datePicker)
         btnConfirmDate = root.findViewById(R.id.btnConfirmDate)
         recyclerViewTimeSlots = root.findViewById(R.id.recyclerViewTimeSlots)
+        closedDayTextView = root.findViewById(R.id.closedTextView)
 
         //region Up-Button
         // Go back to original fragment logic
@@ -92,6 +96,9 @@ class BookingDetailsFragment : Fragment() {
             timeSlotsAdapter.submitList(timeSlots)
             // Show or hide the RecyclerView based on the availability of time slots
             recyclerViewTimeSlots.visibility = if (timeSlots.isEmpty()) View.GONE else View.VISIBLE
+
+            // Show is closed
+            closedDayTextView.visibility = if(timeSlots.isEmpty()) View.VISIBLE else View.GONE
         }
 
         //region DatePicker
@@ -134,15 +141,15 @@ class BookingDetailsFragment : Fragment() {
             bookingDetailsViewModel.fetchTimeSlots()
         }
 
-        // Voeg hier de aanroep van createBooking toe wanneer een tijdslot wordt geselecteerd
+        // Call createBooking when timeslot is selected
         timeSlotsAdapter.setOnItemClickListener { timeSlot ->
-            // Roep de createBooking-functie aan met het geselecteerde tijdslot
+            // Call createBooking function with selected timeslot
             bookingDetailsViewModel.createBooking(timeSlot)
 
-            // Voeg hier eventueel logica toe om de gebruiker te informeren dat de boeking is gemaakt
+            // Add logic to let the user know that booking is done
             showBookingSuccessMessage()
 
-            // Navigeer naar de startpagina
+            // Navigate to Play Page
             findNavController().navigateUp()
         }
 
