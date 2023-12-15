@@ -41,12 +41,44 @@ class BookingsAdapter : ListAdapter<Booking, BookingsAdapter.ViewHolder>(Booking
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = getItem(position)
 
-        // Current Booking-data
+        // Fetch court details using courtId
         val courtId = data.courtId
 
+        //region SetCourtValues
+        // Firebase Instance
+        val db = FirebaseFirestore.getInstance()
+        val courtsCollection = db.collection("courts")
 
-        holder.dateTextView.text = "Date: ${data.date}"
-        holder.startEndTimeTextView.text = "Time: ${data.startTime} - ${data.endTime}"
+        // Select court with courtId
+        courtsCollection.document(courtId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Court document found, extract values and update TextViews
+                    val courtName = document.getString("name")
+                    val courtPrice = document.getString("price")
+                    val courtAddress = document.getString("address")
+
+                    // Set court values
+                    holder.courtNameTextView.text = courtName
+                    holder.courtPriceTextView.text = "€ $courtPrice"
+                    holder.courtAdressTextView.text = courtAddress
+                } else {
+                    Log.d("BookingsAdapter", "Court: ${courtId}")
+
+                    // Set default values to empty strings
+                    holder.courtNameTextView.text = ""
+                    holder.courtPriceTextView.text = ""
+                    holder.courtAdressTextView.text = ""
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("BookingsAdapter", "Couldn't get court!")
+            }
+        //endregion
+
+        holder.dateTextView.text = data.date
+        holder.startEndTimeTextView.text = "${data.startTime} - ${data.endTime}"
     }
 
     private class BookingDiffCallback : DiffUtil.ItemCallback<Booking>() {

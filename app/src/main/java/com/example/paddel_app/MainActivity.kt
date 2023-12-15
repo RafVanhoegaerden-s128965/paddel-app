@@ -126,21 +126,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     // TODO Only get bookings from user, not it gets all bookings
-    fun getBookings(callback: (List<Booking>) -> Unit) {
+    fun getBookings(userId: String, callback: (List<Booking>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val bookingsCollection = db.collection("bookings")
 
-        bookingsCollection.get()
+        // Add a whereEqualTo clause to filter bookings by user ID
+        bookingsCollection.whereEqualTo("userId", userId)
+            .get()
             .addOnSuccessListener { result ->
                 val bookingsList = mutableListOf<Booking>()
 
                 for (document in result) {
-                    // Convert each document to a Court object
+                    // Convert each document to a Booking object
                     val booking = document.toObject(Booking::class.java)
                     booking.id = document.id
                     bookingsList.add(booking)
                 }
-                // Invoke the callback with the list of courts
+                // Invoke the callback with the list of bookings
                 callback(bookingsList)
             }
             .addOnFailureListener { exception ->

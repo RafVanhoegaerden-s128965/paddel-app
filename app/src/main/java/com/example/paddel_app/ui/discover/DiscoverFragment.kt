@@ -18,6 +18,7 @@ import com.example.paddel_app.databinding.FragmentDiscoverBinding
 import com.example.paddel_app.databinding.FragmentPlayBinding
 import com.example.paddel_app.ui.play.ClubsAdapter
 import com.example.paddel_app.ui.play.PlayViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class DiscoverFragment : Fragment() {
     private lateinit var bookingsRecyclerView: RecyclerView
@@ -44,7 +45,10 @@ class DiscoverFragment : Fragment() {
         bookingsRecyclerView.adapter = bookingsAdapter
 
         // Load Bookings
-        (activity as? MainActivity)?.getBookings { bookings ->
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
+        (activity as? MainActivity)?.getBookings(currentUser!!.uid) { bookings ->
             discoverViewModel.setBookingsList(bookings)
         }
 
