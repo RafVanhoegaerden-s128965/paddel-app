@@ -1,33 +1,37 @@
-package com.example.paddel_app.ui.discover
+package com.example.paddel_app.ui.create_game
 
 import DiscoverViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.MainActivity
 import com.example.paddel_app.R
 import com.example.paddel_app.adapter.BookingsAdapter
-import com.example.paddel_app.databinding.FragmentDiscoverBinding
-import com.example.paddel_app.databinding.FragmentPlayBinding
-import com.example.paddel_app.ui.play.ClubsAdapter
-import com.example.paddel_app.ui.play.PlayViewModel
+import com.example.paddel_app.databinding.FragmentCreateGameBinding
+import com.example.paddel_app.databinding.FragmentCreateGameBinding.*
+import com.example.paddel_app.ui.book_court.BookCourtViewModel
 import com.google.firebase.auth.FirebaseAuth
 
-class DiscoverFragment : Fragment() {
+
+class CreateGameFragment : Fragment() {
+
     private lateinit var bookingsRecyclerView: RecyclerView
     private lateinit var bookingsAdapter: BookingsAdapter
 
-    private var _binding: FragmentDiscoverBinding? = null
+    private var _binding: FragmentCreateGameBinding? = null
 
+    private lateinit var createGameViewModel: CreateGameViewModel
     private lateinit var discoverViewModel: DiscoverViewModel
 
     private val binding get() = _binding!!
@@ -36,14 +40,22 @@ class DiscoverFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
+        _binding = inflate(inflater, container, false)
         val root: View = binding.root
 
+        createGameViewModel = ViewModelProvider(this).get(CreateGameViewModel::class.java)
         discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
+
+        //region Up-Button
+        // Go back to original fragment logic
+        val activity = requireActivity() as AppCompatActivity
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+        //endregion
 
         //region BookingList
         bookingsRecyclerView = binding.bookingsRecyclerView
-        bookingsAdapter = BookingsAdapter(isCancelVisible = true, isSelectVisible = false)
+        bookingsAdapter = BookingsAdapter(isCancelVisible = false, isSelectVisible = true)
 
         bookingsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         bookingsRecyclerView.adapter = bookingsAdapter
@@ -51,7 +63,6 @@ class DiscoverFragment : Fragment() {
         // Load Bookings
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
-
         (activity as? MainActivity)?.getBookings(currentUser!!.uid) { bookings ->
             discoverViewModel.setBookingsList(bookings)
         }
@@ -61,13 +72,31 @@ class DiscoverFragment : Fragment() {
             // Update the UI with the new list of courts
             bookingsAdapter.submitList(bookingsList)
             for (booking in bookingsList) {
-                Log.d("DiscoverFragment", "Booking: ${booking}")
+                Log.d("CreateGameFragment", "Booking: ${booking}")
             }
         })
         //endregion
 
+        val btnBookCourt: Button = binding.newBookingBtn
+        btnBookCourt.setOnClickListener {
+            // Call the function to navigate to book court page
+            findNavController().navigate(R.id.navigation_bookCourt)
+        }
+
         return root
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Handle the Up-button click
+                findNavController().navigateUp()
+                return true
+            }
+            // Handle other menu items if needed
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

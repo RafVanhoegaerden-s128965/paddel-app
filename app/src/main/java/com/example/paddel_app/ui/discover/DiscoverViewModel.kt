@@ -9,9 +9,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class DiscoverViewModel : ViewModel() {
     private val bookingsList = MutableLiveData<List<Booking>>()
 
-    private val _courtLiveData = MutableLiveData<Court>()
-    val courtLiveData: LiveData<Court> get() = _courtLiveData
-
     fun setBookingsList(bookings: List<Booking>) {
         bookingsList.value = bookings
     }

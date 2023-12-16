@@ -21,6 +21,7 @@ class BookCourtFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ClubsAdapter
+
     private var _binding: FragmentBookCourtBinding? = null
     private lateinit var bookCourtViewModel: BookCourtViewModel
 

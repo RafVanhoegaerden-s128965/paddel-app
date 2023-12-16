@@ -4,5 +4,5 @@
     <string name="title_play">Play</string>
     <string name="title_profile">Profile</string>
     <string name="title_bookCourt">Book Court</string>
-    <string name="title_createMatch">Create Match</string>
+    <string name="title_createGame">Create Game</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.paddel_app.adapter
 
-import DiscoverViewModel
 import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,18 +7,24 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.navigation.findNavController
 import com.example.paddel_app.R
 import com.example.paddel_app.model.Booking
-import com.example.paddel_app.model.Court
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.example.paddel_app.ui.book_court.BookingDetailsViewModel
+import com.example.paddel_app.ui.create_game.GameDetailsFragment
+import com.example.paddel_app.ui.create_game.GameDetailsViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class BookingsAdapter : ListAdapter<Booking, BookingsAdapter.ViewHolder>(BookingDiffCallback()) {
+class BookingsAdapter(
+    private val isCancelVisible: Boolean = false,
+  private val isSelectVisible: Boolean = false
+) : ListAdapter<Booking, BookingsAdapter.ViewHolder>(BookingDiffCallback(), ) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val courtNameTextView: TextView = itemView.findViewById(R.id.textViewName)
@@ -27,6 +32,8 @@ class BookingsAdapter : ListAdapter<Booking, BookingsAdapter.ViewHolder>(Booking
         val courtAdressTextView: TextView = itemView.findViewById(R.id.textViewAdress)
         val dateTextView: TextView = itemView.findViewById(R.id.textViewDate)
         val startEndTimeTextView: TextView = itemView.findViewById(R.id.textViewStartEndTime)
+        val cancelBtn: Button = itemView.findViewById(R.id.cancelBtn)
+        val selectBtn: Button = itemView.findViewById(R.id.selectBtn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,6 +61,8 @@ class BookingsAdapter : ListAdapter<Booking, BookingsAdapter.ViewHolder>(Booking
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
+                    Log.d("BookingsAdapter.Court", "Court: ${courtId}")
+
                     // Court document found, extract values and update TextViews
                     val courtName = document.getString("name")
                     val courtPrice = document.getString("price")
@@ -64,21 +73,50 @@ class BookingsAdapter : ListAdapter<Booking, BookingsAdapter.ViewHolder>(Booking
                     holder.courtPriceTextView.text = "€ $courtPrice"
                     holder.courtAdressTextView.text = courtAddress
                 } else {
-                    Log.d("BookingsAdapter", "Court: ${courtId}")
-
                     // Set default values to empty strings
                     holder.courtNameTextView.text = ""
                     holder.courtPriceTextView.text = ""
                     holder.courtAdressTextView.text = ""
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.d("BookingsAdapter", "Couldn't get court!")
+            .addOnFailureListener { e ->
+                Log.e("BookingsAdapter.Get", "Error getting document: $e")
             }
         //endregion
 
         holder.dateTextView.text = data.date
         holder.startEndTimeTextView.text = "${data.startTime} - ${data.endTime}"
+
+        holder.cancelBtn.visibility = if (isCancelVisible) View.VISIBLE else View.GONE
+        holder.selectBtn.visibility = if (isSelectVisible) View.VISIBLE else View.GONE
+
+        holder.cancelBtn.setOnClickListener {
+//            val bookingsCollection = db.collection("bookings")
+//            val bookingId = data.id
+//
+//            bookingsCollection.document(bookingId)
+//                .delete()
+//                .addOnSuccessListener {
+//                    // Het document is succesvol verwijderd
+//                    // TODO Set timeslot available
+//
+//                }
+//                .addOnFailureListener { e ->
+//                    Log.e("BookingsAdapter.Delete", "Error deleting document: $e")
+//                }
+        }
+
+        holder.selectBtn.setOnClickListener {
+            val bundle = bundleOf("bookingId" to data.id)
+            holder.itemView.findNavController().navigate(R.id.navigation_gameDetails, bundle)
+
+            // Get GameDetailsViewModel
+            val gameDetailsFragment = ViewModelProvider(holder.itemView.findViewTreeViewModelStoreOwner()!!).get(GameDetailsViewModel::class.java)
+
+            // Select Booking & Set in GameDetailsViewModel
+            val selectedBooking = data
+            gameDetailsFragment.setBooking(selectedBooking)
+        }
     }
 
     private class BookingDiffCallback : DiffUtil.ItemCallback<Booking>() {

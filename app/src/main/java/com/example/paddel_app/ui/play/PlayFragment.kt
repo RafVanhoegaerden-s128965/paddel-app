@@ -56,8 +56,14 @@ class PlayFragment : Fragment() {
 
         val btnMakeReservation: Button = binding.btnBookCourt
         btnMakeReservation.setOnClickListener {
-            // Call the function to get and display the court list
+            // Call the function to navigate to book court page
             findNavController().navigate(R.id.navigation_bookCourt)
+        }
+
+        val btnCreateGame: Button = binding.btnCreateGame
+        btnCreateGame.setOnClickListener {
+            // Call the function to navigate to create game page
+            findNavController().navigate(R.id.navigation_createGame)
         }
 
         return root
