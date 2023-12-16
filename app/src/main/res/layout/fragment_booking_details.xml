@@ -1,58 +1,66 @@
 <!-- res/layout/fragment_booking_details.xml -->
-<RelativeLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.book_court.BookingDetailsFragment">
-
-    <TextView
-        android:id="@+id/courtName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Court Name"
-        android:textColor="#000000"
-        android:textSize="34sp"
-        android:textStyle="bold" />
-
-
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/courtName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
-
-    <Button
-        android:id="@+id/btnConfirmDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/datePicker"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Confirm Date" />
-
-    <!-- RecyclerView for displaying time slots -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTimeSlots"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/closedTextView" />
+        android:layout_height="match_parent"
+        tools:context=".ui.book_court.BookingDetailsFragment">
 
-    <TextView
-        android:id="@+id/closedTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnConfirmDate"
-        android:layout_centerInParent="false"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Club is closed"
-        android:textColor="#000000"
-        android:textSize="28sp"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/courtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Court Name"
+            android:textColor="#000000"
+            android:textSize="34sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/courtName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnConfirmDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/datePicker"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Confirm Date" />
+
+        <!-- RecyclerView for displaying time slots -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTimeSlots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/closedTextView" />
+
+        <TextView
+            android:id="@+id/closedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnConfirmDate"
+            android:layout_centerInParent="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Club is closed"
+            android:textColor="#000000"
+            android:textSize="28sp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</ScrollView>

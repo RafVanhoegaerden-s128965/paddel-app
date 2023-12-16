@@ -1,13 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.create_game.GameDetailsFragment">
-
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".ui.book_court.BookingDetailsFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="Configure Game"
+            android:textColor="#000000"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/configureMatchTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Configure type of game"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/matchTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/configureMatchTypeTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:scrollHorizontally="false"
+            android:text="Match Type"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/comptetiveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/matchTypeTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="Comptetive" />
+
+        <TextView
+            android:id="@+id/competitiveTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comptetiveBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="The result will affect your level and rankings." />
+
+        <Button
+            android:id="@+id/friendlyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/competitiveTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="Friendly" />
+
+        <TextView
+            android:id="@+id/friendlyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/friendlyBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="The result will affect your level and rankings." />
+
+        <TextView
+            android:id="@+id/configureGenderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/friendlyTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Select gender for game"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/genderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/configureGenderTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:scrollHorizontally="false"
+            android:text="Gender"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/allBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/genderTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="All Players" />
+
+        <TextView
+            android:id="@+id/allPlayersTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/allBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="All players can join." />
+
+        <Button
+            android:id="@+id/mixedBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/allPlayersTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="Mixed" />
+
+        <TextView
+            android:id="@+id/mixedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mixedBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="A man and a women on each team." />
+
+        <Button
+            android:id="@+id/menBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/mixedTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="Men Only" />
+
+        <TextView
+            android:id="@+id/menTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Men-only match." />
+
+        <Button
+            android:id="@+id/womenBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/mixedBtn"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="Women Only"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/womenTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/womenBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Women-only match."
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/confirmBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/menTextView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="Confirm Game" />
+    </RelativeLayout>
+</ScrollView>
