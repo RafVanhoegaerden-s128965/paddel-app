@@ -21,36 +21,45 @@
             android:textSize="34sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/configureMatchTypeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/horizontalLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@id/titleTextView"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:text="Configure type of game"
-            android:textColor="#000000"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/matchTypeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/configureMatchTypeTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:scrollHorizontally="false"
-            android:text="Match Type"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/configureMatchTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="16dp"
+                android:text="Match type:"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/matchTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scrollHorizontally="false"
+                android:text="not set"
+                android:textColor="#0027FF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/comptetiveBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@id/matchTypeTextView"
+            android:layout_below="@id/horizontalLayout"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
@@ -84,36 +93,47 @@
             android:layout_marginTop="8dp"
             android:text="The result will affect your level and rankings." />
 
-        <TextView
-            android:id="@+id/configureGenderTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/horizontal2Layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@id/friendlyTextView"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:text="Select gender for game"
-            android:textColor="#000000"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/genderTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/configureGenderTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:scrollHorizontally="false"
-            android:text="Gender"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/configureGenderTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/friendlyTextView"
+                android:layout_marginEnd="16dp"
+                android:text="Gender:"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/genderTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/configureGenderTextView"
+                android:layout_weight="1"
+                android:scrollHorizontally="false"
+                android:text="not set"
+                android:textColor="#0027FF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/allBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@id/genderTextView"
+            android:layout_below="@id/horizontal2Layout"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
@@ -190,12 +210,12 @@
         <Button
             android:id="@+id/confirmBtn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="75dp"
             android:layout_below="@id/menTextView"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
             android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
             android:text="Confirm Game" />
     </RelativeLayout>
 </ScrollView>

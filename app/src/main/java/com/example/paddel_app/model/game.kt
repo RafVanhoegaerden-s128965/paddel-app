@@ -1,5 +1,6 @@
 package com.example.paddel_app.model
 
+import com.example.paddel_app.enum.GenderType
 import com.example.paddel_app.enum.MatchType
 
 data class Game(
@@ -9,8 +10,9 @@ data class Game(
     val userIdPlayer3: String,
     val userIdPlayer4: String,
     val bookingId: String,
-    val matchType: MatchType? = null
+    val matchType: MatchType? = null,
+    val genderType: GenderType? = null
 ) {
     // No-argument constructor
-    constructor() : this("", "", "", "", "", "", null)
+    constructor() : this("", "", "", "", "", "", null, null)
 }

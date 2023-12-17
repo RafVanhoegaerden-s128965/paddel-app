@@ -24,9 +24,6 @@ class BookingDetailsViewModel : ViewModel() {
     private val _currentUser = FirebaseAuth.getInstance().currentUser
     private val _existingBookings = MutableLiveData<List<Booking>>()
 
-    val startTime: MutableLiveData<String> get() = _startTime
-    val endTime: MutableLiveData<String> get() = _endTime
-
     fun getTimeSlots(): LiveData<List<TimeSlot>> {
         return _timeSlots
     }

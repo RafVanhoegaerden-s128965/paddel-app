@@ -33,25 +33,6 @@ class ProfileViewModel : ViewModel() {
     val preferredTime: MutableLiveData<PreferredTime?> get() = _preferredTime
     //endregion
 
-    //region Getters
-    fun getUserName(): String? {
-        return _userName.value
-    }
-    fun getBestHand() : Hand? {
-        return _bestHand.value
-    }
-    fun getCourtPosition() : CourtPosition? {
-        return _courtPosition.value
-    }
-    fun getMatchType() : MatchType? {
-        return _matchType.value
-    }
-    fun getPreferredTime() : PreferredTime? {
-        return _preferredTime.value
-    }
-    //endregion
-
-    //region Setter
     fun setUser(user: User) {
         Log.d("ProfileViewModel.SetUserName", "User: ${user.firstName} ${user.lastName}")
         val userName = "${user.firstName} ${user.lastName}"
@@ -61,7 +42,6 @@ class ProfileViewModel : ViewModel() {
         _matchType.value = user.matchType
         _preferredTime.value = user.preferredTime
     }
-    //endregion
 
 
     //region Update

@@ -47,7 +47,7 @@ class ProfileFragment : Fragment() {
             bestHand?.let {
                 val lowercaseBestHand = it.name.toLowerCase().capitalize()
                 bestHandTextView.text = lowercaseBestHand
-                Log.d("ProfileViewModel", "Best hand: ${it.toString()}" )
+                Log.d("ProfileFragment", "Best hand: ${it.toString()}" )
             }
         })
 

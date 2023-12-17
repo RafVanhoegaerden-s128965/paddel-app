@@ -15,3 +15,7 @@ enum class MatchType {
 enum class PreferredTime {
     MORNING, AFTERNOON, EVENING, ALL_DAY
 }
+
+enum class GenderType {
+    ALL, MIXED, MEN_ONLY, WOMEN_ONLY
+}
