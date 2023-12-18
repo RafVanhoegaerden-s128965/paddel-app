@@ -75,6 +75,7 @@ class CreateGameFragment : Fragment() {
         })
         //endregion
 
+
         val btnBookCourt: Button = binding.newBookingBtn
         btnBookCourt.setOnClickListener {
             // Call the function to navigate to book court page

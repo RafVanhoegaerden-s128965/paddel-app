@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.paddel_app.databinding.ActivityMainBinding
 import com.example.paddel_app.model.Booking
 import com.example.paddel_app.model.Court
+import com.example.paddel_app.model.Game
 import com.example.paddel_app.model.User
 import com.example.paddel_app.ui.play.PlayViewModel
 import com.example.paddel_app.ui.profile.ProfileViewModel
@@ -143,6 +144,30 @@ class MainActivity : AppCompatActivity() {
                 }
                 // Invoke the callback with the list of bookings
                 callback(bookingsList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("MainActivity", "Firestore query failed: $exception")
+                // Handle errors here
+            }
+    }
+
+    fun getGames(userId: String, callback: (List<Game>) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val gamesCollection = db.collection("games")
+
+        gamesCollection.whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { result ->
+                val gamesList = mutableListOf<Game>()
+
+                for (document in result) {
+                    // Convert each document to a Game object
+                    val game = document.toObject(Game::class.java)
+                    game.id = document.id
+                    gamesList.add(game)
+                }
+                // Invoke the callback with the list of bookings
+                callback(gamesList)
             }
             .addOnFailureListener { exception ->
                 Log.e("MainActivity", "Firestore query failed: $exception")
