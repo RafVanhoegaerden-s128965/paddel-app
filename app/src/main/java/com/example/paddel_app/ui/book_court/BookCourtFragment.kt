@@ -21,7 +21,6 @@ class BookCourtFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ClubsAdapter
-
     private var _binding: FragmentBookCourtBinding? = null
     private lateinit var bookCourtViewModel: BookCourtViewModel
 
@@ -59,7 +58,6 @@ class BookCourtFragment : Fragment() {
             // Update the UI with the new list of courts
             adapter.submitList(courtsList)
             for (court in courtsList) {
-                //Log.d("BookCourtFragment", "Court: ${court}")
                 Log.d("BookCourtFragment","Court ID: ${court.id}")
             }
         })

@@ -28,7 +28,6 @@ import java.util.Locale
 class BookingDetailsFragment : Fragment() {
 
     private var _binding: FragmentBookingDetailsBinding? = null
-
     private lateinit var datePicker: DatePicker
     private lateinit var btnConfirmDate: Button
     private lateinit var recyclerViewTimeSlots: RecyclerView
@@ -45,6 +44,7 @@ class BookingDetailsFragment : Fragment() {
     ): View? {
         _binding = FragmentBookingDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
 
         //region GetCourtId
         val bundle = arguments

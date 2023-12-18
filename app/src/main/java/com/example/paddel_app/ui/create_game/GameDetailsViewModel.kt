@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.paddel_app.databinding.FragmentGameDetailsBinding
 import com.example.paddel_app.enum.GenderType
 import com.example.paddel_app.enum.MatchType
 import com.example.paddel_app.model.Booking
@@ -36,46 +37,50 @@ class GameDetailsViewModel : ViewModel() {
         _genderType.value = genderType
     }
 
-    fun createGame(){
+    fun createGame() {
         val userId = _currentUser?.uid
-        val bookingId = booking.id
+        val bookingId = booking?.id
 
-        val game = Game(
-            id = "",
-            userIdOwner = userId.orEmpty(),
-            userIdPlayer2 = "",
-            userIdPlayer3 = "",
-            userIdPlayer4 = "",
-            bookingId = bookingId,
-            matchType = _matchType.value,
-            genderType = _genderType.value
-        )
+        if (userId != null && bookingId != null) {
+            val game = Game(
+                id = "",
+                userIdOwner = userId,
+                userIdPlayer2 = "",
+                userIdPlayer3 = "",
+                userIdPlayer4 = "",
+                bookingId = bookingId,
+                matchType = _matchType.value,
+                genderType = _genderType.value
+            )
 
-        val db = FirebaseFirestore.getInstance()
-        val gamesCollection = db.collection("games")
+            val db = FirebaseFirestore.getInstance()
+            val gamesCollection = db.collection("games")
 
-        // Add booking to collection
-        gamesCollection.add(game)
-            .addOnSuccessListener { documentReference ->
-                val gameId = documentReference.id
+            // Add booking to collection
+            gamesCollection.add(game)
+                .addOnSuccessListener { documentReference ->
+                    val gameId = documentReference.id
 
-                // Update the booking with the generated ID
-                game.id = gameId
+                    // Update the booking with the generated ID
+                    game.id = gameId
 
-                // Now the id field is set to the document ID
-                Log.d("GameDetailsViewModel", "Game added with ID: $gameId")
+                    // Now the id field is set to the document ID
+                    Log.d("GameDetailsViewModel", "Game added with ID: $gameId")
 
-                // Update the document in Firestore with the correct id
-                documentReference.update("id", gameId)
-                    .addOnSuccessListener {
-                        Log.d("GameDetailsViewModel", "Game document updated with correct id")
-                    }
-                    .addOnFailureListener { updateError ->
-                        Log.e("GameDetailsViewModel", "Error updating game document", updateError)
-                    }
-            }
-            .addOnFailureListener { e ->
-                Log.e("GameDetailsViewModel", "Error adding game", e)
-            }
+                    // Update the document in Firestore with the correct id
+                    documentReference.update("id", gameId)
+                        .addOnSuccessListener {
+                            Log.d("GameDetailsViewModel", "Game document updated with correct id")
+                        }
+                        .addOnFailureListener { updateError ->
+                            Log.e("GameDetailsViewModel", "Error updating game document", updateError)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("GameDetailsViewModel", "Error adding game", e)
+                }
+        } else {
+            Log.e("GameDetailsViewModel", "User ID or Booking ID is null")
+        }
     }
 }

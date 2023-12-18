@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class BookingsAdapter(
     private val isCancelVisible: Boolean = false,
   private val isSelectVisible: Boolean = false
-) : ListAdapter<Booking, BookingsAdapter.ViewHolder>(BookingDiffCallback(), ) {
+) : ListAdapter<Booking, BookingsAdapter.ViewHolder>(BookingDiffCallback() ) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val courtNameTextView: TextView = itemView.findViewById(R.id.textViewName)
@@ -111,11 +111,11 @@ class BookingsAdapter(
             holder.itemView.findNavController().navigate(R.id.navigation_gameDetails, bundle)
 
             // Get GameDetailsViewModel
-            val gameDetailsFragment = ViewModelProvider(holder.itemView.findViewTreeViewModelStoreOwner()!!).get(GameDetailsViewModel::class.java)
+            val gameDetailsModel = ViewModelProvider(holder.itemView.findViewTreeViewModelStoreOwner()!!).get(GameDetailsViewModel::class.java)
 
             // Select Booking & Set in GameDetailsViewModel
             val selectedBooking = data
-            gameDetailsFragment.setBooking(selectedBooking)
+            gameDetailsModel.setBooking(selectedBooking)
         }
     }
 

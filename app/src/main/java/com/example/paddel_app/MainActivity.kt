@@ -125,7 +125,6 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    // TODO Only get bookings from user, not it gets all bookings
     fun getBookings(userId: String, callback: (List<Booking>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val bookingsCollection = db.collection("bookings")

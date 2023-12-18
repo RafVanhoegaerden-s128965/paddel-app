@@ -28,9 +28,7 @@ class CreateGameFragment : Fragment() {
 
     private lateinit var bookingsRecyclerView: RecyclerView
     private lateinit var bookingsAdapter: BookingsAdapter
-
     private var _binding: FragmentCreateGameBinding? = null
-
     private lateinit var createGameViewModel: CreateGameViewModel
     private lateinit var discoverViewModel: DiscoverViewModel
 
