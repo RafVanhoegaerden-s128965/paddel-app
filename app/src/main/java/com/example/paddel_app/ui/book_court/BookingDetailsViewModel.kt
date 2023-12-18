@@ -2,6 +2,7 @@ package com.example.paddel_app.ui.book_court
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.paddel_app.enum.Days
@@ -17,10 +18,10 @@ import java.util.Locale
 class BookingDetailsViewModel : ViewModel() {
 
     private val _selectedDate = MutableLiveData<String>()
-    private val _timeSlots = MutableLiveData<List<TimeSlot>>()
+    private val _timeSlots = MediatorLiveData<List<TimeSlot>>()
     private lateinit var court: Court
     private val _currentUser = FirebaseAuth.getInstance().currentUser
-    private val _existingBookings = MutableLiveData<List<Booking>>()
+    private val _existingBookings = MediatorLiveData<List<Booking>>()
 
     fun getTimeSlots(): LiveData<List<TimeSlot>> {
         return _timeSlots
@@ -47,14 +48,14 @@ class BookingDetailsViewModel : ViewModel() {
         val closedDays = court.closedDays
 
         // Fetch existing bookings for the selected day
-        fetchExistingBookings(_selectedDate.value.orEmpty())
-
-        // Load real-time slots after fetching existing bookings
-        loadRealTimeSlots(openingTime, closingTime, closedDays)
+        fetchExistingBookings(_selectedDate.value.orEmpty()) { existingBookings ->
+            // Load real-time slots after fetching existing bookings
+            loadRealTimeSlots(openingTime, closingTime, closedDays, existingBookings)
+        }
     }
 
     // Fetch existing bookings for the selected day
-    private fun fetchExistingBookings(selectedDate: String) {
+    private fun fetchExistingBookings(selectedDate: String, callback: (List<Booking>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val bookingsCollection = db.collection("bookings")
 
@@ -66,13 +67,14 @@ class BookingDetailsViewModel : ViewModel() {
             .addOnSuccessListener { result ->
                 val existingBookings = result.toObjects(Booking::class.java)
                 _existingBookings.value = existingBookings
+                callback(existingBookings)
             }
             .addOnFailureListener { e ->
                 Log.e("BookingDetailsViewModel", "Error fetching existing bookings", e)
             }
     }
 
-    private fun loadRealTimeSlots(openingTime: String, closingTime: String, closedDays: List<Days>) {
+    private fun loadRealTimeSlots(openingTime: String, closingTime: String, closedDays: List<Days>, existingBookings: List<Booking>) {
         // Existing bookings for the selected day
         val existingBookings = _existingBookings.value ?: emptyList()
 
