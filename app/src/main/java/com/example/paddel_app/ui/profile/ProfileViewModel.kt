@@ -35,7 +35,7 @@ class ProfileViewModel : ViewModel() {
 
     fun setUser(user: User) {
         Log.d("ProfileViewModel.SetUserName", "User: ${user.firstName} ${user.lastName}")
-        val userName = "${user.firstName} ${user.lastName}"
+        val userName = "${user.firstName.capitalize()} ${user.lastName.capitalize()}"
         _userName.value = userName
         _bestHand.value = user.bestHand
         _courtPosition.value = user.courtPosition

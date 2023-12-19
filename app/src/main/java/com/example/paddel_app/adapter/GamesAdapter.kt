@@ -1,22 +1,32 @@
 package com.example.paddel_app.adapter
 
+import DiscoverViewModel
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.paddel_app.MainActivity
 import com.example.paddel_app.R
 import com.example.paddel_app.enum.GenderType
 import com.example.paddel_app.model.Booking
 import com.example.paddel_app.model.Game
+import com.example.paddel_app.ui.discover.DiscoverFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class GamesAdapter  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCallback())  {
+class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCallback())  {
+
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     private var courtId: String = ""
 
@@ -43,15 +53,17 @@ class GamesAdapter  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCall
             R.layout.item_game,
             parent,
             false
+
         )
         return GamesAdapter.ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val data = getItem(position)
 
         // Set games values
-        holder.matchTypeTextView.text = data.matchType.toString().toLowerCase().capitalize()
+        holder.matchTypeTextView.text = "Match Type: ${data.matchType.toString().toLowerCase().capitalize()}"
         data.genderType?.let {
             val displayText = when (it) {
                 GenderType.MEN_ONLY -> "Men Only"
@@ -59,7 +71,7 @@ class GamesAdapter  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCall
                 else -> it.name.toLowerCase().capitalize()
             }
 
-            holder.matchGenderTextView.text = displayText
+            holder.matchGenderTextView.text = "Gender: ${displayText}"
         }
 
         // Firebase Instance
@@ -113,7 +125,7 @@ class GamesAdapter  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCall
                             data.userIdPlayer2 -> {
                                 holder.player2TextView.text = firstName
                                 holder.player2Button.text = if (!firstName.isNullOrEmpty()) {
-                                    "${lastName?.capitalize()?.first()} ${lastName?.capitalize()?.first()}"
+                                    "${firstName?.capitalize()?.first()} ${lastName?.capitalize()?.first()}"
                                 } else {
                                     "+"
                                 }
@@ -123,7 +135,7 @@ class GamesAdapter  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCall
                             data.userIdPlayer3 -> {
                                 holder.player3TextView.text = firstName
                                 holder.player3Button.text = if (!firstName.isNullOrEmpty()) {
-                                    "${lastName?.capitalize()?.first()} ${lastName?.capitalize()?.first()}"
+                                    "${firstName?.capitalize()?.first()} ${lastName?.capitalize()?.first()}"
                                 } else {
                                     "+"
                                 }
@@ -152,8 +164,6 @@ class GamesAdapter  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCall
         loadPlayerData(data.userIdPlayer2, holder)
         loadPlayerData(data.userIdPlayer3, holder)
         loadPlayerData(data.userIdPlayer4, holder)
-        //endregion
-
         //endregion
 
         //region GetBooking
@@ -219,6 +229,54 @@ class GamesAdapter  : ListAdapter<Game, GamesAdapter.ViewHolder>(BookingDiffCall
             }
 
         //endregion
+
+        //region Buttons
+        // TODO Checks on gender / match type
+        fun joinGame(playerNumber: Int, data: Game, holder: ViewHolder) {
+            val gameId = data.id
+            val gameRef = db.collection("games").document(gameId)
+
+            if (data.userIdOwner == currentUser!!.uid) {
+                Toast.makeText(context, "Can't join your own game!", Toast.LENGTH_SHORT).show()
+            } else {
+                val currentPlayerId: String = when (playerNumber) {
+                    2 -> data.userIdPlayer2
+                    3 -> data.userIdPlayer3
+                    4 -> data.userIdPlayer4
+                    else -> ""
+                }
+
+                val otherPlayerIds = listOf(data.userIdPlayer2, data.userIdPlayer3, data.userIdPlayer4)
+
+                if (currentPlayerId == currentUser!!.uid || currentUser!!.uid in otherPlayerIds) {
+                    Toast.makeText(context, "Can't join a game twice!", Toast.LENGTH_SHORT).show()
+                } else {
+                    gameRef.update("userIdPlayer$playerNumber", currentUser!!.uid)
+                        .addOnSuccessListener {
+                            // Update succes
+                            // TODO values only show after reload of page
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("GamesAdapter.UpdatePlayer$playerNumber", "Error updating document: $e")
+                        }
+                }
+            }
+        }
+
+
+        holder.player2Button.setOnClickListener {
+            joinGame(2, data, holder)
+        }
+
+        holder.player3Button.setOnClickListener {
+            joinGame(3, data, holder)
+        }
+
+        holder.player4Button.setOnClickListener {
+            joinGame(4, data, holder)
+        }
+        //endregion
+
     }
 }
 

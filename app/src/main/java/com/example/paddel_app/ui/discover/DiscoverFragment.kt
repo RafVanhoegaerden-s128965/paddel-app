@@ -45,7 +45,7 @@ class DiscoverFragment : Fragment() {
 
         //region GamesList
         gamesRecyclerView = binding.openGamesRecyclerView
-        gamesAdapter = GamesAdapter()
+        gamesAdapter = GamesAdapter(requireContext())
 
         gamesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         gamesRecyclerView.adapter = gamesAdapter
@@ -59,7 +59,6 @@ class DiscoverFragment : Fragment() {
         (activity as? MainActivity)?.getAllGames() { games ->
             discoverViewModel.setGamesList(games)
             Log.d("DiscoverFragment.Game", "Games: ${games}")
-
         }
 
 
@@ -72,8 +71,6 @@ class DiscoverFragment : Fragment() {
 //            }
         })
         //endregion
-
-
 
         //region BookingList
         bookingsRecyclerView = binding.bookingsRecyclerView
