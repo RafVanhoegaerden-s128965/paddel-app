@@ -51,17 +51,25 @@ class DiscoverFragment : Fragment() {
         gamesRecyclerView.adapter = gamesAdapter
 
         // Load Games
-        (activity as? MainActivity)?.getGames(currentUser!!.uid) { games ->
+//        (activity as? MainActivity)?.getOwnGames(currentUser!!.uid) { games ->
+//            discoverViewModel.setGamesList(games)
+//            Log.d("DiscoverFragment.Game", "Games: ${games}")
+//
+//        }
+        (activity as? MainActivity)?.getAllGames() { games ->
             discoverViewModel.setGamesList(games)
+            Log.d("DiscoverFragment.Game", "Games: ${games}")
+
         }
+
 
         // Observe changes in the bookings list
         discoverViewModel.getGamesList().observe(viewLifecycleOwner, Observer { gamesList ->
             // Update the UI with the new list of courts
             gamesAdapter.submitList(gamesList)
-            for (game in gamesList) {
-                Log.d("DiscoverFragment", "Game: ${game}")
-            }
+//            for (game in gamesList) {
+//                Log.d("DiscoverFragment.Game", "Game: ${game}")
+//            }
         })
         //endregion
 
@@ -77,15 +85,16 @@ class DiscoverFragment : Fragment() {
         // Load Bookings
         (activity as? MainActivity)?.getBookings(currentUser!!.uid) { bookings ->
             discoverViewModel.setBookingsList(bookings)
+                Log.d("DiscoverFragment.Booking", "Bookings: ${bookings}")
         }
 
         // Observe changes in the bookings list
         discoverViewModel.getBookingsList().observe(viewLifecycleOwner, Observer { bookingsList ->
             // Update the UI with the new list of courts
             bookingsAdapter.submitList(bookingsList)
-            for (booking in bookingsList) {
-                Log.d("DiscoverFragment", "Booking: ${booking}")
-            }
+//            for (booking in bookingsList) {
+//                Log.d("DiscoverFragment.Booking", "Booking: ${booking}")
+//            }
         })
         //endregion
 

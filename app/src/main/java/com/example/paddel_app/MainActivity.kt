@@ -153,11 +153,35 @@ class MainActivity : AppCompatActivity() {
 
     // TODO getActivebookings function
 
-    fun getGames(userId: String, callback: (List<Game>) -> Unit) {
+    fun getOwnGames(userId: String, callback: (List<Game>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val gamesCollection = db.collection("games")
 
-        gamesCollection.whereEqualTo("userId", userId)
+        gamesCollection.whereEqualTo("userIdOwner", userId)
+            .get()
+            .addOnSuccessListener { result ->
+                val gamesList = mutableListOf<Game>()
+
+                for (document in result) {
+                    // Convert each document to a Game object
+                    val game = document.toObject(Game::class.java)
+                    game.id = document.id
+                    gamesList.add(game)
+                }
+                // Invoke the callback with the list of bookings
+                callback(gamesList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("MainActivity", "Firestore query failed: $exception")
+                // Handle errors here
+            }
+    }
+
+    fun getAllGames(callback: (List<Game>) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val gamesCollection = db.collection("games")
+
+        gamesCollection
             .get()
             .addOnSuccessListener { result ->
                 val gamesList = mutableListOf<Game>()
