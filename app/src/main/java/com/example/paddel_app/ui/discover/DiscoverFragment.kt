@@ -6,23 +6,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paddel_app.MainActivity
-import com.example.paddel_app.R
 import com.example.paddel_app.adapter.BookingsAdapter
+import com.example.paddel_app.adapter.GamesAdapter
 import com.example.paddel_app.databinding.FragmentDiscoverBinding
-import com.example.paddel_app.databinding.FragmentPlayBinding
-import com.example.paddel_app.ui.play.ClubsAdapter
-import com.example.paddel_app.ui.play.PlayViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class DiscoverFragment : Fragment() {
+
+    private val auth = FirebaseAuth.getInstance()
+    private val currentUser = auth.currentUser
+
+    private lateinit var gamesRecyclerView: RecyclerView
+    private lateinit var gamesAdapter: GamesAdapter
+
     private lateinit var bookingsRecyclerView: RecyclerView
     private lateinit var bookingsAdapter: BookingsAdapter
 
@@ -41,6 +43,30 @@ class DiscoverFragment : Fragment() {
 
         discoverViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
 
+        //region GamesList
+        gamesRecyclerView = binding.openGamesRecyclerView
+        gamesAdapter = GamesAdapter()
+
+        gamesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        gamesRecyclerView.adapter = gamesAdapter
+
+        // Load Games
+        (activity as? MainActivity)?.getGames(currentUser!!.uid) { games ->
+            discoverViewModel.setGamesList(games)
+        }
+
+        // Observe changes in the bookings list
+        discoverViewModel.getGamesList().observe(viewLifecycleOwner, Observer { gamesList ->
+            // Update the UI with the new list of courts
+            gamesAdapter.submitList(gamesList)
+            for (game in gamesList) {
+                Log.d("DiscoverFragment", "Game: ${game}")
+            }
+        })
+        //endregion
+
+
+
         //region BookingList
         bookingsRecyclerView = binding.bookingsRecyclerView
         bookingsAdapter = BookingsAdapter(isCancelVisible = true, isSelectVisible = false)
@@ -49,9 +75,6 @@ class DiscoverFragment : Fragment() {
         bookingsRecyclerView.adapter = bookingsAdapter
 
         // Load Bookings
-        val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-
         (activity as? MainActivity)?.getBookings(currentUser!!.uid) { bookings ->
             discoverViewModel.setBookingsList(bookings)
         }

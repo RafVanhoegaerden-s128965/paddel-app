@@ -151,6 +151,8 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    // TODO getActivebookings function
+
     fun getGames(userId: String, callback: (List<Game>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val gamesCollection = db.collection("games")

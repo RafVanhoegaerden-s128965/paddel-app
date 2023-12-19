@@ -68,6 +68,7 @@ class CreateGameFragment : Fragment() {
         // Observe changes in the bookings list
         discoverViewModel.getBookingsList().observe(viewLifecycleOwner, Observer { bookingsList ->
             // Update the UI with the new list of courts
+            // TODO change list to active list
             bookingsAdapter.submitList(bookingsList)
             for (booking in bookingsList) {
                 Log.d("CreateGameFragment", "Booking: ${booking}")
@@ -79,6 +80,7 @@ class CreateGameFragment : Fragment() {
         val btnBookCourt: Button = binding.newBookingBtn
         btnBookCourt.setOnClickListener {
             // Call the function to navigate to book court page
+            // TODO Navigate to GameDetails Fragment instead of Book Court Page
             findNavController().navigate(R.id.navigation_bookCourt)
         }
 

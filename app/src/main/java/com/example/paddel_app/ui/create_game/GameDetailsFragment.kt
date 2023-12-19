@@ -27,6 +27,8 @@ class GameDetailsFragment : Fragment() {
     private var _binding: FragmentGameDetailsBinding? = null
     private lateinit var gameDetailsViewModel: GameDetailsViewModel
     private lateinit var btnCreateGame: Button
+
+    private lateinit var bookingId: String
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -39,7 +41,7 @@ class GameDetailsFragment : Fragment() {
         //region GetBookingId
         val bundle = arguments
         if (bundle != null && bundle.containsKey("bookingId")) {
-            val bookingId = bundle.getString("bookingId", "")
+            bookingId = bundle.getString("bookingId", "")
 
             getBookingWithID(bookingId) { booking ->
                 if (booking != null) {
@@ -118,6 +120,8 @@ class GameDetailsFragment : Fragment() {
 
         btnCreateGame.setOnClickListener{
             gameDetailsViewModel.createGame()
+
+            // TODO add to active list
 
             showGameSuccessMessage()
 
