@@ -248,7 +248,7 @@ class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapt
 
                 val otherPlayerIds = listOf(data.userIdPlayer2, data.userIdPlayer3, data.userIdPlayer4)
 
-                if (currentPlayerId == currentUser!!.uid || currentUser!!.uid in otherPlayerIds) {
+                if (currentUser!!.uid in otherPlayerIds) {
                     Toast.makeText(context, "Can't join a game twice!", Toast.LENGTH_SHORT).show()
                 } else {
                     gameRef.update("userIdPlayer$playerNumber", currentUser!!.uid)
