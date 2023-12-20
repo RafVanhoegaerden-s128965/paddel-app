@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentProfileBinding
 import com.example.paddel_app.enum.CourtPosition
 import com.example.paddel_app.enum.Hand
@@ -136,6 +138,13 @@ class ProfileFragment : Fragment() {
             profileViewModel.updatePreferredTime(PreferredTime.ALL_DAY)
         }
         //endregion
+
+        val editProfileButton: Button = binding.editProfileBtn
+        editProfileButton.setOnClickListener {
+            // Navigeer naar het EditProfileFragment
+            findNavController().navigate(R.id.navigation_editProfile)
+        }
+
 
         return root
     }
