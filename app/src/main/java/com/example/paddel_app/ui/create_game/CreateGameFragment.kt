@@ -61,7 +61,7 @@ class CreateGameFragment : Fragment() {
         // Load Bookings
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
-        (activity as? MainActivity)?.getBookings(currentUser!!.uid) { bookings ->
+        (activity as? MainActivity)?.getActiveBookings(currentUser!!.uid) { bookings ->
             discoverViewModel.setBookingsList(bookings)
         }
 

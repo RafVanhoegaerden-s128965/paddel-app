@@ -151,7 +151,22 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    // TODO getActivebookings function
+    fun getActiveBookings(userId: String, callback: (List<Booking>) -> Unit) {
+        // Eerst de games ophalen die door de gebruiker zijn gecreëerd
+        getCreatedGames(userId) { createdGames ->
+            // Vervolgens de bookings ophalen voor de gebruiker
+            getBookings(userId) { userBookings ->
+                // Actieve bookings filteren op basis van de gecreëerde games
+                val activeBookingsList = userBookings.filter { booking ->
+                    // Check of de booking's gameId niet overeenkomt met een id in de createdGames
+                    !createdGames.any { it.bookingId == booking.id }
+                }
+
+                // Callback aanroepen met de lijst van actieve bookings
+                callback(activeBookingsList)
+            }
+        }
+    }
 
     fun getCreatedGames(userId: String, callback: (List<Game>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
