@@ -252,7 +252,7 @@ class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapt
                     Toast.makeText(context, "Can't join a game twice!", Toast.LENGTH_SHORT).show()
                 } else {
                     gameRef.update("userIdPlayer$playerNumber", currentUser!!.uid)
-                        .addOnSuccessListener {
+                        .addOnCompleteListener() {
                             // Update succes
                             // TODO values only show after reload of page
                         }
@@ -262,7 +262,6 @@ class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapt
                 }
             }
         }
-
 
         holder.player2Button.setOnClickListener {
             joinGame(2, data, holder)
@@ -279,6 +278,8 @@ class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapt
 
     }
 }
+
+
 
 private class BookingDiffCallback : DiffUtil.ItemCallback<Game>() {
     override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean {

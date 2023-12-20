@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -50,17 +51,29 @@ class DiscoverFragment : Fragment() {
         gamesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         gamesRecyclerView.adapter = gamesAdapter
 
-        // Load Games
-//        (activity as? MainActivity)?.getOwnGames(currentUser!!.uid) { games ->
-//            discoverViewModel.setGamesList(games)
-//            Log.d("DiscoverFragment.Game", "Games: ${games}")
-//
-//        }
-        (activity as? MainActivity)?.getAllGames() { games ->
+        // Initialise Created Games
+        (activity as? MainActivity)?.getCreatedGames(currentUser!!.uid) { games ->
             discoverViewModel.setGamesList(games)
             Log.d("DiscoverFragment.Game", "Games: ${games}")
         }
 
+        // Load Created Games
+        val showCreatedGamesBtn: Button = binding.showCreatedGamesBtn
+        showCreatedGamesBtn.setOnClickListener {
+            (activity as? MainActivity)?.getCreatedGames(currentUser!!.uid) { games ->
+                discoverViewModel.setGamesList(games)
+                Log.d("DiscoverFragment.Game", "Games: ${games}")
+            }
+        }
+
+        // Load Open Games
+        val showOpenGamesBtn: Button = binding.showOpenGamesBtn
+        showOpenGamesBtn.setOnClickListener {
+            (activity as? MainActivity)?.getOpenGames(currentUser!!.uid) { games ->
+                discoverViewModel.setGamesList(games)
+                Log.d("DiscoverFragment.Game", "Games: ${games}")
+            }
+        }
 
         // Observe changes in the bookings list
         discoverViewModel.getGamesList().observe(viewLifecycleOwner, Observer { gamesList ->

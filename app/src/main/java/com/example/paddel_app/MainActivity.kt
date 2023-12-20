@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
 
     // TODO getActivebookings function
 
-    fun getOwnGames(userId: String, callback: (List<Game>) -> Unit) {
+    fun getCreatedGames(userId: String, callback: (List<Game>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val gamesCollection = db.collection("games")
 
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun getAllGames(callback: (List<Game>) -> Unit) {
+    fun getOpenGames(currentUser: String, callback: (List<Game>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val gamesCollection = db.collection("games")
 
@@ -189,10 +189,14 @@ class MainActivity : AppCompatActivity() {
                 for (document in result) {
                     // Convert each document to a Game object
                     val game = document.toObject(Game::class.java)
-                    game.id = document.id
-                    gamesList.add(game)
+
+                    // Check if the game's ID is different from the current user's ID
+                    if (game.userIdOwner != currentUser) {
+                        game.id = document.id
+                        gamesList.add(game)
+                    }
                 }
-                // Invoke the callback with the list of bookings
+                // Invoke the callback with the list of open games
                 callback(gamesList)
             }
             .addOnFailureListener { exception ->
@@ -200,4 +204,5 @@ class MainActivity : AppCompatActivity() {
                 // Handle errors here
             }
     }
+
 }
