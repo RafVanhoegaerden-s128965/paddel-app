@@ -255,6 +255,7 @@ class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapt
                         .addOnCompleteListener() {
                             // Update succes
                             // TODO values only show after reload of page
+
                         }
                         .addOnFailureListener { e ->
                             Log.e("GamesAdapter.UpdatePlayer$playerNumber", "Error updating document: $e")

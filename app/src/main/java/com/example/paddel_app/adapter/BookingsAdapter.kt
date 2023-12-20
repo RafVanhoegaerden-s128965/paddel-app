@@ -91,19 +91,41 @@ class BookingsAdapter(
         holder.selectBtn.visibility = if (isSelectVisible) View.VISIBLE else View.GONE
 
         holder.cancelBtn.setOnClickListener {
-//            val bookingsCollection = db.collection("bookings")
-//            val bookingId = data.id
-//
-//            bookingsCollection.document(bookingId)
-//                .delete()
-//                .addOnSuccessListener {
-//                    // Het document is succesvol verwijderd
-//                    // TODO Set timeslot available
-//
-//                }
-//                .addOnFailureListener { e ->
-//                    Log.e("BookingsAdapter.Delete", "Error deleting document: $e")
-//                }
+            val bookingsCollection = db.collection("bookings")
+            val bookingId = data.id
+
+            val gamesCollection = db.collection("games")
+            gamesCollection.whereEqualTo("bookingId", bookingId)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    for (document in querySnapshot.documents) {
+                        // Delete each game document found
+                        gamesCollection.document(document.id)
+                            .delete()
+                            .addOnSuccessListener {
+                                Log.d("BookingsAdapter.Delete", "Game document successfully deleted!")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("BookingsAdapter.Delete", "Error deleting game document: $e")
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("BookingsAdapter.Delete", "Error querying game documents: $e")
+                }
+
+            // Delete the booking document
+            bookingsCollection.document(bookingId)
+                .delete()
+                .addOnSuccessListener {
+
+                    Log.d("BookingsAdapter.Delete", "Booking document successfully deleted!")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("BookingsAdapter.Delete", "Error deleting booking document: $e")
+                }
+
+            holder.itemView.findNavController().navigate(R.id.navigation_discover)
         }
 
         holder.selectBtn.setOnClickListener {
