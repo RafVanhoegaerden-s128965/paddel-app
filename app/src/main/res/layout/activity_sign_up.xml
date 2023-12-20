@@ -68,11 +68,12 @@
         android:layout_marginEnd="16dp"
         android:hint="Gender">
 
-        <EditText
-            android:id="@+id/etGender"
+        <Spinner
+            android:id="@+id/spinnerGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:entries="@array/gender_options"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
