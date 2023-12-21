@@ -57,6 +57,7 @@ class GameDetailsFragment : Fragment() {
 
         gameDetailsViewModel = ViewModelProvider(this).get(GameDetailsViewModel::class.java)
         btnCreateGame = root.findViewById(R.id.confirmBtn)
+
         //region Up-Button
         // Go back to original fragment logic
         val activity = requireActivity() as AppCompatActivity

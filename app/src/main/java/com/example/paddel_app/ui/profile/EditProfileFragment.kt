@@ -2,11 +2,14 @@ package com.example.paddel_app.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.paddel_app.R
 import com.example.paddel_app.databinding.FragmentEditProfileBinding
 
@@ -26,6 +29,13 @@ class EditProfileFragment : Fragment() {
         val root: View = binding.root
 
         editProfileViewModel = ViewModelProvider(this).get(EditProfileViewModel::class.java)
+
+        //region Up-Button
+        // Go back to original fragment logic
+        val activity = requireActivity() as AppCompatActivity
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+        //endregion
 
         // Observer voor het bijwerken van de UI wanneer gebruikersgegevens veranderen
         editProfileViewModel.user.observe(viewLifecycleOwner) { user ->
@@ -51,6 +61,18 @@ class EditProfileFragment : Fragment() {
         val birthDate = binding.etDOB.text.toString()
         val gender = resources.getStringArray(R.array.gender_options)[binding.spinnerGender.selectedItemPosition]
         editProfileViewModel.updateUserProfile(firstName, lastName, email, birthDate, gender)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Handle the Up-button click
+                findNavController().navigateUp()
+                return true
+            }
+            // Handle other menu items if needed
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
