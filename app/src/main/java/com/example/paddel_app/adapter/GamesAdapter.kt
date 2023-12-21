@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -255,7 +257,7 @@ class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapt
                         .addOnCompleteListener() {
                             // Update succes
                             // TODO values only show after reload of page
-
+                            Log.e("GamesAdapter.UpdatePlayer$playerNumber", "Added player to game")
                         }
                         .addOnFailureListener { e ->
                             Log.e("GamesAdapter.UpdatePlayer$playerNumber", "Error updating document: $e")
@@ -266,14 +268,17 @@ class GamesAdapter(private val context: Context)  : ListAdapter<Game, GamesAdapt
 
         holder.player2Button.setOnClickListener {
             joinGame(2, data, holder)
+            holder.itemView.findNavController().navigate(R.id.navigation_discover)
         }
 
         holder.player3Button.setOnClickListener {
             joinGame(3, data, holder)
+            holder.itemView.findNavController().navigate(R.id.navigation_discover)
         }
 
         holder.player4Button.setOnClickListener {
             joinGame(4, data, holder)
+            holder.itemView.findNavController().navigate(R.id.navigation_discover)
         }
         //endregion
 

@@ -1,7 +1,7 @@
 package com.example.paddel_app.ui.discover
-
 import DiscoverViewModel
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +35,39 @@ class DiscoverFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private val handler = Handler()
+    private val updateInterval = 10000L // 10 seconds
+
+    private var isShowingCreatedGames = true // Default to true since you initially load created games
+
+    private val updateRunnable = object : Runnable {
+        override fun run() {
+            // Decide which games to load based on the current state
+            if (isShowingCreatedGames) {
+                // Load Created Games
+                (activity as? MainActivity)?.getCreatedGames(currentUser!!.uid) { games ->
+                    discoverViewModel.setGamesList(games)
+                    Log.d("DiscoverFragment.Game", "Games: $games")
+                }
+            } else {
+                // Load Open Games
+                (activity as? MainActivity)?.getOpenGames(currentUser!!.uid) { games ->
+                    discoverViewModel.setGamesList(games)
+                    Log.d("DiscoverFragment.Game", "Open Games: $games")
+                }
+            }
+
+            // Load Bookings
+            (activity as? MainActivity)?.getBookings(currentUser!!.uid) { bookings ->
+                discoverViewModel.setBookingsList(bookings)
+                Log.d("DiscoverFragment.Booking", "Bookings: $bookings")
+            }
+
+            // Schedule the next update after the specified interval
+            handler.postDelayed(this, updateInterval)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,37 +84,38 @@ class DiscoverFragment : Fragment() {
         gamesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         gamesRecyclerView.adapter = gamesAdapter
 
-        // Initialise Created Games
-        (activity as? MainActivity)?.getCreatedGames(currentUser!!.uid) { games ->
+        // Load Open Games immediately when the fragment is created
+        (activity as? MainActivity)?.getOpenGames(currentUser!!.uid) { games ->
             discoverViewModel.setGamesList(games)
-            Log.d("DiscoverFragment.Game", "Games: ${games}")
+            Log.d("DiscoverFragment.Game", "Open Games: $games")
         }
 
         // Load Created Games
         val showCreatedGamesBtn: Button = binding.showCreatedGamesBtn
         showCreatedGamesBtn.setOnClickListener {
+            isShowingCreatedGames = true
+            // Load Created Games
             (activity as? MainActivity)?.getCreatedGames(currentUser!!.uid) { games ->
                 discoverViewModel.setGamesList(games)
-                Log.d("DiscoverFragment.Game", "Games: ${games}")
+                Log.d("DiscoverFragment.Game", "Games: $games")
             }
         }
 
         // Load Open Games
         val showOpenGamesBtn: Button = binding.showOpenGamesBtn
         showOpenGamesBtn.setOnClickListener {
+            isShowingCreatedGames = false
+            // Load Open Games
             (activity as? MainActivity)?.getOpenGames(currentUser!!.uid) { games ->
                 discoverViewModel.setGamesList(games)
-                Log.d("DiscoverFragment.Game", "Games: ${games}")
+                Log.d("DiscoverFragment.Game", "Open Games: $games")
             }
         }
 
-        // Observe changes in the bookings list
+        // Observe changes in the games list
         discoverViewModel.getGamesList().observe(viewLifecycleOwner, Observer { gamesList ->
-            // Update the UI with the new list of courts
+            // Update the UI with the new list of games
             gamesAdapter.submitList(gamesList)
-//            for (game in gamesList) {
-//                Log.d("DiscoverFragment.Game", "Game: ${game}")
-//            }
         })
         //endregion
 
@@ -95,23 +129,26 @@ class DiscoverFragment : Fragment() {
         // Load Bookings
         (activity as? MainActivity)?.getBookings(currentUser!!.uid) { bookings ->
             discoverViewModel.setBookingsList(bookings)
-                Log.d("DiscoverFragment.Booking", "Bookings: ${bookings}")
+            Log.d("DiscoverFragment.Booking", "Bookings: $bookings")
         }
 
         // Observe changes in the bookings list
         discoverViewModel.getBookingsList().observe(viewLifecycleOwner, Observer { bookingsList ->
-            // Update the UI with the new list of courts
+            // Update the UI with the new list of bookings
             bookingsAdapter.submitList(bookingsList)
-//            for (booking in bookingsList) {
-//                Log.d("DiscoverFragment.Booking", "Booking: ${booking}")
-//            }
         })
         //endregion
 
+        // Schedule the initial data update after the specified interval
+        handler.postDelayed(updateRunnable, updateInterval)
+
         return root
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        // Remove the update callback when the fragment is destroyed
+        handler.removeCallbacks(updateRunnable)
         _binding = null
     }
 }
